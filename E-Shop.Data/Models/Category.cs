@@ -29,5 +29,13 @@ namespace E_Shop.Data.Models
         public bool Hidden { get; set; }
 
         public int? ParentCategoryId { get; set; }
+
+        public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
+
+        [ForeignKey("ParentCategoryId")]
+        [InverseProperty("ChildCategories")]
+        public virtual Category ParentCategory { get; set; }
+
+        public virtual ICollection<Category> ChildCategories { get; set; }
     }
 }

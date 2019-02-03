@@ -53,7 +53,7 @@ namespace E_Shop.Data.Models
 
         [Required(ErrorMessage = "Vyplňte počet kusov na sklade")]
         [Display(Name = "Skladom")]
-        [Range(0, int.MaxValue, ErrorMessage = "Počet kusov na sklad nesmie byť záporný")]
+        [Range(0, int.MaxValue, ErrorMessage = "Počet kusov na sklade nesmie byť záporný")]
         public int Stock { get; set; }
 
         [Display(Name = "Obrázkov produktu celkom")]
@@ -63,6 +63,7 @@ namespace E_Shop.Data.Models
         [Display(Name = "Skryť")]
         public bool Hidden { get; set; }
 
+        public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 
 
     }
