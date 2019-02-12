@@ -29,4 +29,8 @@
     <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Account\" />
+  </ItemGroup>
+
 </Project>

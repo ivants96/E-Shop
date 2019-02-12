@@ -42,7 +42,7 @@ namespace E_Shop
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
               .AddEntityFrameworkStores<ApplicationDbContext>()
-              .AddDefaultTokenProviders();
+              .AddDefaultTokenProviders();  
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
