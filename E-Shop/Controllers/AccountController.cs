@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Classes;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
 using E_Shop.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -44,10 +46,12 @@ namespace E_Shop.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    this.AddFlashMessage("Přihlášení proběhlo úspěšně.", FlashMessageType.Success);
                     return RedirectTolocal(returnUrl);
                 }
                 else
                 {
+                    this.AddFlashMessage("Neplatné přihlašovací údaje.", FlashMessageType.Danger);
                     return View(model);
                 }
             }
