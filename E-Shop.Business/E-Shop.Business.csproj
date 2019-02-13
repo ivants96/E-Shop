@@ -10,11 +10,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Managers\" />
     <Folder Include="Services\" />
     <Folder Include="Extensions\" />
     <Folder Include="Classes\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.0.6" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0006" />
+    <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.0-beta0007" />
+  </ItemGroup>
+  
 
 </Project>
