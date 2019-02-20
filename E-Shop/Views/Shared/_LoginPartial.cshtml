@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using E_Shop.Data.Models
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="list-unstyled list-inline">
+        <li class="list-inline-item">
+            <form asp-page="/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
+                <button type="submit" class="btn bg-transparent text-success"><em>Odhlásiť sa&nbsp;<i class="fa fa-power-off"></i></em></button>
+            </form>
+        </li>
+        <li class="list-inline-item">
+            <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
+        </li>
+    </ul>
+}
+else
+{
+<ul class="list-unstyled list-inline">
+    <li class="list-inline-item">
+        <a asp-page="/Login" class="nav-link text-success"><em>Prihlásiť sa&nbsp;<i class="fa fa-sign-in"></i></em></a>
+    </li>
+    <li class="list-inline-item">
+        <a asp-page="/Register" class="nav-link text-success"><em>Registrovať sa&nbsp;<i class="fa fa-user-plus"></i></em></a>
+    </li>
+    <li class="list-inline-item">
+        <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
+    </li>
+</ul>
+}
+    
+
+

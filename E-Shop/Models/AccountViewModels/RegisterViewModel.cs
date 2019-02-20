@@ -19,6 +19,7 @@ namespace E_Shop.Models.AccountViewModels
         [Display(Name = "Heslo")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Potvrďte heslo")]
         [DataType(DataType.Password)]
         [Display(Name = "Potvrdenie hesla")]
         [Compare("Password", ErrorMessage = "Zadaná heslá sa nezhodujú")]

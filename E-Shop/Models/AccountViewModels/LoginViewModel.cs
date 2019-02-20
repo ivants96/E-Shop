@@ -12,7 +12,7 @@ namespace E_Shop.Models.AccountViewModels
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Pre prihlásenie musíte zadať e-mail heslo")]
+        [Required(ErrorMessage = "Pre prihlásenie musíte zadať heslo")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
