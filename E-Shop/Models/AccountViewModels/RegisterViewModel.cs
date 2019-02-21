@@ -14,7 +14,7 @@ namespace E_Shop.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Heslo je povinné")]
-        [StringLength(100, ErrorMessage = "{0} musí obsahovať aspoň {2} a najviac {1} znaků", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} musí obsahovať aspoň {2} a najviac {1} znakov", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Heslo")]
         public string Password { get; set; }

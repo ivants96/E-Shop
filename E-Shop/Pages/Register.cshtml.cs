@@ -33,7 +33,7 @@ namespace E_Shop.Pages
             _signInManager = signInManager;
             _logger = logger;
         }
-
+             
         [BindProperty]
         public RegisterViewModel Input { get; set; }
 
@@ -44,6 +44,7 @@ namespace E_Shop.Pages
             ReturnUrl = returnUrl;
         }
 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -66,6 +67,9 @@ namespace E_Shop.Pages
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+       
+
     }
 
 }

@@ -9,30 +9,51 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <ul class="list-unstyled list-inline">
+        <li class="list-inline-item dropdown">
+            <a href="#" class="nav-link text-primary dropdown-toggle" id="myAccountDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Môj účet</a>
+            <div class="dropdown-menu" aria-labelledby="#myAccountDropdown">
+                @if (this.Context.User.IsInRole("Admin"))
+                {
+                    <a href="#" class="dropdown-item">Správa objednávok</a>
+                    <a href="#" class="dropdown-item">Pridať produkt</a>
+                    <a href="#" class="dropdown-item">Správa kategórií</a>
+                    <a href="#" class="dropdown-item">Zoznam člankov</a>
+                    <a href="#" class="dropdown-item">Editor člankov</a>
+                    <a href="#" class="dropdown-item">Nastavenia</a>
+                }
+                else
+                {
+                    <a href="#" class="dropdown-item">Moje objednávky</a>
+                    <a asp-page="/ChangePassword" class="dropdown-item">Nastavenia účtu</a>
+                }
+            </div>
+        </li>
+        <li class="list-inline-item">
+            <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
+        </li>
         <li class="list-inline-item">
             <form asp-page="/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
                 <button type="submit" class="btn bg-transparent text-success"><em>Odhlásiť sa&nbsp;<i class="fa fa-power-off"></i></em></button>
             </form>
+        </li>
+
+    </ul>
+}
+else
+{
+    <ul class="list-unstyled list-inline">
+        <li class="list-inline-item">
+            <a asp-page="/Login" class="nav-link text-success"><em>Prihlásiť sa&nbsp;<i class="fa fa-sign-in"></i></em></a>
+        </li>
+        <li class="list-inline-item">
+            <a asp-page="/Register" class="nav-link text-success"><em>Registrovať sa&nbsp;<i class="fa fa-user-plus"></i></em></a>
         </li>
         <li class="list-inline-item">
             <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
         </li>
     </ul>
 }
-else
-{
-<ul class="list-unstyled list-inline">
-    <li class="list-inline-item">
-        <a asp-page="/Login" class="nav-link text-success"><em>Prihlásiť sa&nbsp;<i class="fa fa-sign-in"></i></em></a>
-    </li>
-    <li class="list-inline-item">
-        <a asp-page="/Register" class="nav-link text-success"><em>Registrovať sa&nbsp;<i class="fa fa-user-plus"></i></em></a>
-    </li>
-    <li class="list-inline-item">
-        <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
-    </li>
-</ul>
-}
-    
+
 
 
