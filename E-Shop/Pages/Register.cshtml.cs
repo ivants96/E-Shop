@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using E_Shop.Classes;
 using E_Shop.Controllers;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
 using E_Shop.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -55,7 +57,7 @@ namespace E_Shop.Pages
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                                                           
+                    this.AddFlashMessage("Váš účet bol úspešne vytvorený", FlashMessageType.Success);
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
@@ -65,6 +67,7 @@ namespace E_Shop.Pages
                 }
             }
             // If we got this far, something failed, redisplay form
+            this.AddFlashMessage("Účet so zadanou e-mailovou adresou už existuje", FlashMessageType.Danger);
             return Page();
         }
 

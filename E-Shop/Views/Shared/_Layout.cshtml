@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using E_Shop.Data.Models
+@using E_Shop.Extensions
 
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -95,7 +96,7 @@
     </header>
 
     <div class="container">
-
+        @Html.RenderFlashMessages()
         <div class="row">
             <div class="col-sm-3">
 

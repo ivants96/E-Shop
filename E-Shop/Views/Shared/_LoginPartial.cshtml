@@ -16,17 +16,16 @@
                 @if (this.Context.User.IsInRole("Admin"))
                 {
                     <a href="#" class="dropdown-item">Správa objednávok</a>
-                    <a href="#" class="dropdown-item">Pridať produkt</a>
                     <a href="#" class="dropdown-item">Správa kategórií</a>
+                    <a href="#" class="dropdown-item">Pridať produkt</a>                    
                     <a href="#" class="dropdown-item">Zoznam člankov</a>
                     <a href="#" class="dropdown-item">Editor člankov</a>
                     <a href="#" class="dropdown-item">Nastavenia</a>
                 }
-                else
-                {
-                    <a href="#" class="dropdown-item">Moje objednávky</a>
-                    <a asp-page="/ChangePassword" class="dropdown-item">Nastavenia účtu</a>
-                }
+                <a href="#" class="dropdown-item">Moje objednávky</a>
+                <a href="#" class="dropdown-item">Správa údajov</a>
+                <a asp-page="/ChangePassword" class="dropdown-item">Zmena hesla</a>
+
             </div>
         </li>
         <li class="list-inline-item">

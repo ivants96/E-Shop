@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using E_Shop.Classes;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
 using E_Shop.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace E_Shop.Pages
 {
+    [ExceptionsToMessageFilter]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -32,8 +34,8 @@ namespace E_Shop.Pages
         public string ReturnUrl { get; set; }
 
         [TempData]
-        public string ErrorMessage { get; set; }      
-       
+        public string ErrorMessage { get; set; }
+
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -61,18 +63,22 @@ namespace E_Shop.Pages
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                
                 if (result.Succeeded)
-                {
+                {                   
                     _logger.LogInformation("Boli ste úspešne prihlásený");                    
-                    return LocalRedirect(returnUrl);
-                }                                
+                    this.AddFlashMessage("Boli ste úspešne prihlásený.", FlashMessageType.Success);
+                    return LocalRedirect(returnUrl);                    
+                }
                 else
                 {
+                    this.AddFlashMessage("Neplatné prihlasovacie údaje.", FlashMessageType.Danger);
                     ModelState.AddModelError(string.Empty, "Neplatné prihlasovacie údaje.");
                     return Page();
+
                 }
             }
-            // If we got this far, something failed, redisplay form
+            // If we got this far, something failed, redisplay form            
             return Page();
         }
     }

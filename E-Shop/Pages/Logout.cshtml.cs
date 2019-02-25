@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Classes;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,10 +31,12 @@ namespace E_Shop.Pages
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
             await _signInManager.SignOutAsync();
             _logger.LogInformation("Boli ste odlhásený.");
             if (returnUrl != null)
             {
+                this.AddFlashMessage("Boli ste úspešne odhlásený.", FlashMessageType.Success);
                 return LocalRedirect(returnUrl);
             }
             else

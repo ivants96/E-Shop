@@ -54,6 +54,8 @@ namespace E_Shop
             .AddRazorPagesOptions(options =>
               {
                   options.Conventions.AuthorizePage("/Logout");
+                  options.Conventions.AuthorizePage("/ChangePassword");                   
+                  options.Conventions.AuthorizePage("/PassChangeConfirmation");
               })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

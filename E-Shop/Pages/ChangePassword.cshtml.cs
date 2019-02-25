@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Classes;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
 using E_Shop.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +42,7 @@ namespace E_Shop.Pages
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync()
         {
+            var returnUrl = Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -49,7 +52,8 @@ namespace E_Shop.Pages
                 {
                     _logger.LogInformation("Password has been changed");
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("PassChangeConfirmation");
+                    this.AddFlashMessage("Vaše heslo bolo úspešne zmenené", FlashMessageType.Success);
+                    return LocalRedirect(returnUrl);
                 }
                 else
                 {
