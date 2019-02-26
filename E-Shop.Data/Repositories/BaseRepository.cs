@@ -19,24 +19,24 @@ namespace E_Shop.Data.Repositories
             context = new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                 .Options);
-            dbset = context.Set<TEntity>();
+            dbSet = context.Set<TEntity>();
         }
 
         protected DbContext context;
-        protected DbSet<TEntity> dbset;
+        protected DbSet<TEntity> dbSet;
 
         public void Add(TEntity entity)
         {
-            dbset.Add(entity);
+            dbSet.Add(entity);
             context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-           TEntity entity = dbset.Find(id);
+           TEntity entity = dbSet.Find(id);
             try
             {
-                dbset.Remove(entity);
+                dbSet.Remove(entity);
                 context.SaveChanges();
             }
             catch (Exception)
@@ -48,23 +48,23 @@ namespace E_Shop.Data.Repositories
 
         public TEntity FindById(int id)
         {
-            return dbset.Find(id);
+            return dbSet.Find(id);
         }
 
         public List<TEntity> GetAll()
         {
-            return dbset.ToList();
+            return dbSet.ToList();
         }
 
         public void Update(TEntity entity)
         {
-            if (dbset.Contains(entity))
+            if (dbSet.Contains(entity))
             {
-                dbset.Update(entity);
+                dbSet.Update(entity);
             }
             else
             {
-                dbset.Add(entity);
+                dbSet.Add(entity);
                 context.SaveChanges();
             }
         }

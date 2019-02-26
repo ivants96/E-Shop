@@ -10,7 +10,7 @@ namespace E_Shop.Data.Repositories
     {
         public Product FindByUrl(string url)
         {
-            return dbset.SingleOrDefault(p => p.Url == url && !p.Hidden);
+            return dbSet.SingleOrDefault(p => p.Url == url && !p.Hidden);
         }
     }
 }
