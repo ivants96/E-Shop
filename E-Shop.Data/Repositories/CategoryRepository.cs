@@ -9,6 +9,8 @@ namespace E_Shop.Data.Repositories
 {
     public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
+        public CategoryRepository(ApplicationDbContext context) : base (context) { }
+
         public List<Category> GetLeaves()
         {
             return dbSet.Where(c => c.ChildCategories.Count == 0 && !c.Hidden).ToList();            

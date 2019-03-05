@@ -10,17 +10,12 @@ namespace E_Shop.Data.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        public BaseRepository()
+        public BaseRepository(ApplicationDbContext context)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-            context = new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-                .Options);
+            this.context = context;
             dbSet = context.Set<TEntity>();
         }
+       
 
         protected DbContext context;
         protected DbSet<TEntity> dbSet;

@@ -76,6 +76,35 @@ namespace E_Shop.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "6f663b69-78eb-4679-9954-14c22d019a8e", "e9d88343-4e4c-4f9c-a925-f07e1ce58c0c", "User", null },
+                    { "606d125f-a82e-47c8-9fdf-9d3fd77de05e", "2a1127ac-ed2c-4eba-a2e5-f8d6bc6f5e04", "Admin", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoryId", "Hidden", "OrderNo", "ParentCategoryId", "Title", "Url" },
+                values: new object[,]
+                {
+                    { 1, false, 1, null, "Obývací pokoj", "obyvaci-pokoj" },
+                    { 2, false, 4, null, "Kuchyně", "kuchyne" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoryId", "Hidden", "OrderNo", "ParentCategoryId", "Title", "Url" },
+                values: new object[,]
+                {
+                    { 3, false, 2, 1, "Záclony", "zaclony" },
+                    { 4, false, 3, 1, "Květináče", "kvetinace" },
+                    { 5, false, 5, 2, "Nádobí", "nadobi" },
+                    { 6, false, 6, 2, "Kuchyňské desky", "kuchynske-desky" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentCategoryId",
                 table: "Categories",
@@ -97,6 +126,16 @@ namespace E_Shop.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumns: new[] { "Id", "ConcurrencyStamp" },
+                keyValues: new object[] { "606d125f-a82e-47c8-9fdf-9d3fd77de05e", "2a1127ac-ed2c-4eba-a2e5-f8d6bc6f5e04" });
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumns: new[] { "Id", "ConcurrencyStamp" },
+                keyValues: new object[] { "6f663b69-78eb-4679-9954-14c22d019a8e", "e9d88343-4e4c-4f9c-a925-f07e1ce58c0c" });
         }
     }
 }

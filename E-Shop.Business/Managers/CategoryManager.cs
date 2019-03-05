@@ -33,7 +33,7 @@ namespace E_Shop.Business.Managers
                 throw new ArgumentNullException($"Product {productId} was not found");
             }
 
-            var currentCategories = product.CategoryProducts.Select(cp => cp.CategoryId);
+            var currentCategories = product.CategoryProducts.Select(cp => cp.CategoryId).ToList();
             var removeCategories = currentCategories.Except(categories).ToList();
             var addCategories = categories.Except(currentCategories).ToList();  
 

@@ -8,6 +8,12 @@ namespace E_Shop.Data.Models
 {
     public class Category
     {
+        public Category()
+        {
+            CategoryProducts = new List<CategoryProduct>();
+            ChildCategories = new List<Category>();
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int CategoryId { get; set; }
 

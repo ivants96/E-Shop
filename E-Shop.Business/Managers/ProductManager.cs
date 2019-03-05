@@ -26,5 +26,10 @@ namespace E_Shop.Business.Managers
         {
             return productRepository.FindByUrl(url);
         }
+
+        public void SaveProduct(Product product)
+        {
+            productRepository.Add(product);
+        }
     }
 }

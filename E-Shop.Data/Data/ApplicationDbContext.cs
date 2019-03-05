@@ -34,6 +34,7 @@ namespace E_Shop.Data
                 .WithMany(p => p.CategoryProducts)
                 .HasForeignKey(cp => cp.ProductId);
 
+
             builder.Entity<IdentityRole>()
             .HasData(new IdentityRole("User"),
              new IdentityRole("Admin"));
@@ -48,6 +49,7 @@ namespace E_Shop.Data
                 new Category() { CategoryId = 5, ParentCategoryId = 2, Title = "Nádobí", Url = "nadobi", OrderNo = 5, Hidden = false },
                 new Category() { CategoryId = 6, ParentCategoryId = 2, Title = "Kuchyňské desky", Url = "kuchynske-desky", OrderNo = 6, Hidden = false }
             );
+           
 
         }
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Shop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190203183526_RelationCreate")]
+    [Migration("20190305175529_RelationCreate")]
     partial class RelationCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +97,15 @@ namespace E_Shop.Data.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new { CategoryId = 1, Hidden = false, OrderNo = 1, Title = "Obývací pokoj", Url = "obyvaci-pokoj" },
+                        new { CategoryId = 2, Hidden = false, OrderNo = 4, Title = "Kuchyně", Url = "kuchyne" },
+                        new { CategoryId = 3, Hidden = false, OrderNo = 2, ParentCategoryId = 1, Title = "Záclony", Url = "zaclony" },
+                        new { CategoryId = 4, Hidden = false, OrderNo = 3, ParentCategoryId = 1, Title = "Květináče", Url = "kvetinace" },
+                        new { CategoryId = 5, Hidden = false, OrderNo = 5, ParentCategoryId = 2, Title = "Nádobí", Url = "nadobi" },
+                        new { CategoryId = 6, Hidden = false, OrderNo = 6, ParentCategoryId = 2, Title = "Kuchyňské desky", Url = "kuchynske-desky" }
+                    );
                 });
 
             modelBuilder.Entity("E_Shop.Data.Models.CategoryProduct", b =>
@@ -174,6 +183,11 @@ namespace E_Shop.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = "6f663b69-78eb-4679-9954-14c22d019a8e", ConcurrencyStamp = "e9d88343-4e4c-4f9c-a925-f07e1ce58c0c", Name = "User" },
+                        new { Id = "606d125f-a82e-47c8-9fdf-9d3fd77de05e", ConcurrencyStamp = "2a1127ac-ed2c-4eba-a2e5-f8d6bc6f5e04", Name = "Admin" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -13,6 +13,11 @@ using E_Shop.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using E_Shop.Data.Models;
+using E_Shop.Extensions;
+using E_Shop.Business.Managers;
+using E_Shop.Business.Interfaces;
+using E_Shop.Data.Repositories;
+using E_Shop.Data.Interfaces;
 
 namespace E_Shop
 {
@@ -50,6 +55,14 @@ namespace E_Shop
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
+            services.AddImageProcessing();
+                       
+            services.AddScoped<ICategoryRepository, CategoryRepository>();           
+            services.AddScoped<IProductRepository, ProductRepository>();
+                     
+            services.AddScoped<ICategoryManager, CategoryManager>();           
+            services.AddScoped<IProductManager, ProductManager>();
+           
             services.AddMvc()
             .AddRazorPagesOptions(options =>
               {
@@ -58,6 +71,8 @@ namespace E_Shop
                   options.Conventions.AuthorizePage("/PassChangeConfirmation");
               })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

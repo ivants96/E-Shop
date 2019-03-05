@@ -12,6 +12,7 @@ namespace E_Shop.Data.Models
         {
             ImagesCount = 0;
             Hidden = false;
+            CategoryProducts = new List<CategoryProduct>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
