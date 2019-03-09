@@ -59,18 +59,19 @@ namespace E_Shop
                        
             services.AddScoped<ICategoryRepository, CategoryRepository>();           
             services.AddScoped<IProductRepository, ProductRepository>();
-                     
+            services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
+
             services.AddScoped<ICategoryManager, CategoryManager>();           
             services.AddScoped<IProductManager, ProductManager>();
-           
+
             services.AddMvc()
             .AddRazorPagesOptions(options =>
               {
                   options.Conventions.AuthorizePage("/Logout");
-                  options.Conventions.AuthorizePage("/ChangePassword");                   
+                  options.Conventions.AuthorizePage("/ChangePassword");
                   options.Conventions.AuthorizePage("/PassChangeConfirmation");
-              })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+              });
+            //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDistributedMemoryCache();
             services.AddSession();
         }

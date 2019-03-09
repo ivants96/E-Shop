@@ -66,6 +66,5 @@ namespace E_Shop.Data.Models
 
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using E_Shop.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -12,15 +13,20 @@ namespace E_Shop.Data
     {
         DbSet<Product> Products { get; set; }
         DbSet<Category> Categories { get; set; }
+        DbSet<CategoryProduct> CategoryProducts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+                : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(10,1)");
+            builder.Entity<Product>().Property(x => x.OldPrice).HasColumnType("decimal(10,1)");
+
+            builder.Entity<Category>().Property(x => x.CategoryId).ValueGeneratedOnAdd();
 
             builder.Entity<CategoryProduct>().HasKey(cp => new { cp.CategoryId, cp.ProductId });
 
@@ -34,6 +40,14 @@ namespace E_Shop.Data
                 .WithMany(p => p.CategoryProducts)
                 .HasForeignKey(cp => cp.ProductId);
 
+            var cascadeFKs = builder.Model.GetEntityTypes()
+                                    .SelectMany(t => t.GetForeignKeys())
+                                    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs)
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
             builder.Entity<IdentityRole>()
             .HasData(new IdentityRole("User"),
@@ -49,7 +63,7 @@ namespace E_Shop.Data
                 new Category() { CategoryId = 5, ParentCategoryId = 2, Title = "Nádobí", Url = "nadobi", OrderNo = 5, Hidden = false },
                 new Category() { CategoryId = 6, ParentCategoryId = 2, Title = "Kuchyňské desky", Url = "kuchynske-desky", OrderNo = 6, Hidden = false }
             );
-           
+
 
         }
 

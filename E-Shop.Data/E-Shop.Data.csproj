@@ -11,6 +11,14 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\20190203183526_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190305175529_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190306204755_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190307204205_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190307204355_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190307205620_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190307210411_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190308155531_RelationCreate.cs" />
+    <Compile Remove="Data\Migrations\20190309182740_RelationCreate.cs" />
   </ItemGroup>
 
   <ItemGroup>

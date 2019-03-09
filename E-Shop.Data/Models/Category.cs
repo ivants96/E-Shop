@@ -13,6 +13,7 @@ namespace E_Shop.Data.Models
             CategoryProducts = new List<CategoryProduct>();
             ChildCategories = new List<Category>();
         }
+                       
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int CategoryId { get; set; }
@@ -42,6 +43,6 @@ namespace E_Shop.Data.Models
         [InverseProperty("ChildCategories")]
         public virtual Category ParentCategory { get; set; }
 
-        public virtual ICollection<Category> ChildCategories { get; set; }
+        public virtual ICollection<Category> ChildCategories { get; set; }             
     }
 }

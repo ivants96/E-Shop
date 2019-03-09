@@ -29,7 +29,29 @@ namespace E_Shop.Business.Managers
 
         public void SaveProduct(Product product)
         {
+            var oldProduct = productRepository.FindById(product.ProductId);
             productRepository.Add(product);
+
+            if (oldProduct != null)
+            {
+                CleanProduct(oldProduct);
+            }
         }
+
+        public void CleanProduct(Product oldProduct)
+        {
+            try
+            {
+                productRepository.Delete(oldProduct.ProductId);
+            }
+            catch (Exception)
+            {
+                oldProduct.CategoryProducts.Clear();    // odstraníme produkt z kategorií
+                oldProduct.Hidden = true;               // a skryjeme ho
+                productRepository.Update(oldProduct);
+            }
+        }
+
+        
     }
 }

@@ -116,7 +116,7 @@ namespace E_Shop.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CategoryProduct");
+                    b.ToTable("CategoryProducts");
                 });
 
             modelBuilder.Entity("E_Shop.Data.Models.Product", b =>
@@ -136,9 +136,11 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<int>("ImagesCount");
 
-                    b.Property<decimal?>("OldPrice");
+                    b.Property<decimal?>("OldPrice")
+                        .HasColumnType("decimal(10,1)");
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10,1)");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -183,8 +185,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "6f663b69-78eb-4679-9954-14c22d019a8e", ConcurrencyStamp = "e9d88343-4e4c-4f9c-a925-f07e1ce58c0c", Name = "User" },
-                        new { Id = "606d125f-a82e-47c8-9fdf-9d3fd77de05e", ConcurrencyStamp = "2a1127ac-ed2c-4eba-a2e5-f8d6bc6f5e04", Name = "Admin" }
+                        new { Id = "f54935da-b9cb-41a2-885f-2f3074204437", ConcurrencyStamp = "66ac92f9-7bc4-49ed-ba26-0f61c5659cce", Name = "User" },
+                        new { Id = "0eea957a-0362-4db0-b9a3-1525828b2c0b", ConcurrencyStamp = "bddfe818-b77b-47cf-896f-bce7facc37f4", Name = "Admin" }
                     );
                 });
 
@@ -286,12 +288,12 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("E_Shop.Data.Models.Category", "Category")
                         .WithMany("CategoryProducts")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("E_Shop.Data.Models.Product", "Product")
                         .WithMany("CategoryProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -299,7 +301,7 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -307,7 +309,7 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("E_Shop.Data.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -315,7 +317,7 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("E_Shop.Data.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -323,12 +325,12 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("E_Shop.Data.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -336,7 +338,7 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("E_Shop.Data.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
