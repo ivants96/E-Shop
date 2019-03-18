@@ -28,38 +28,32 @@ namespace E_Shop.Business.Managers
             return categoryRepository.GetLeaves();
         }
 
-        public void UpdateProductCategories(int productId, int[] categories) //Find current product by it'đ Id
+        public void UpdateProductCategories(int productId, int[] categories) //Enter product id and array of categories you wish to add
         {
             Product product = productRepository.FindById(productId);
+
             if (product == null)
             {
                 throw new ArgumentNullException($"Product {productId} was not found");
             }
-            // 
-            var currentCategories = product.CategoryProducts.Select(x => x.CategoryId).ToList(); // stores id/ids of currently checked categories
-            var removeCategories = currentCategories.Except(categories); // stores id/ids you unchecked
-            var addCategories = categories.Except(currentCategories);// stores categories that have not yet been checked and can be
-
-            // Remove current product's category/categories. CategoryId/Ids are stored in removeCategories
-            foreach (var categoryId in removeCategories)
+            else
             {
-                CategoryProduct toRemove = product.CategoryProducts
-                                                    .Where(cp => cp.CategoryId == categoryId)
-                                                    .SingleOrDefault();
-                product.CategoryProducts.Remove(toRemove);
+                product.CategoryProducts.Clear();
             }
-            // Add new category/categories for current product. 
-            foreach (var categoryId in addCategories)
+                                      
+
+            for (int i = 0; i < categories.Length; i++)
             {
                 CategoryProduct toAdd = new CategoryProduct()
                 {
-                    CategoryId = categoryId,
+                    CategoryId = categories[i],
                     ProductId = product.ProductId
                 };
                 product.CategoryProducts.Add(toAdd);
-                categoryProductRepository.Add(toAdd);
+                categoryProductRepository.Update(toAdd);
+
             }
-            productRepository.Update(product);
+           // productRepository.Update(product);
         }
 
 

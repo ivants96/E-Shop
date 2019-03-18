@@ -22,6 +22,7 @@ namespace E_Shop.Data.Repositories
 
         public void Add(TEntity entity)
         {
+            context.Entry(entity).State = EntityState.Detached;
             dbSet.Add(entity);
             context.SaveChanges();
         }
@@ -52,14 +53,15 @@ namespace E_Shop.Data.Repositories
         }
 
         public void Update(TEntity entity)
-        {
+        {            
             if (dbSet.Contains(entity))
-            {
+            {                
                 dbSet.Update(entity);
+                context.SaveChanges();
             }
             else
             {
-                dbSet.Add(entity);
+                Add(entity);
                 context.SaveChanges();
             }
         }

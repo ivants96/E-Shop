@@ -19,12 +19,14 @@ namespace E_Shop.Controllers
     {
         IProductManager productManager;
         ICategoryManager categoryManager;
-       
+        ICategoryProductRepository categoryProductRepository;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager)
-        {            
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager,
+            ICategoryProductRepository categoryProductRepository)
+        {
             this.productManager = productManager;
-            this.categoryManager = categoryManager;            
+            this.categoryManager = categoryManager;
+            this.categoryProductRepository = categoryProductRepository;
         }
 
         [HttpGet]
@@ -63,20 +65,35 @@ namespace E_Shop.Controllers
                 this.AddFlashMessage("Zlé parametre produktu!", FlashMessageType.Danger);
                 return View(model);
             }
+
             var AllCategories = categoryManager.GetLeaves();
 
             // najdi ze všech dostupných kategorií ty, které jsou označené (PostedCategoried[index] == true)
             int[] selectedCategories = AllCategories.Where(cat => model.PostedCategories[AllCategories.IndexOf(cat)])
                                                         .Select(cat => cat.CategoryId)  // z každéj kategorie nás zaujíma len jej ID
                                                         .ToArray();
-           
-            // uloženie produktu aj s jeho väzbami
+            // uloženie produktu aj s jeho väzbami                                    
             productManager.SaveProduct(model.Product);
             categoryManager.UpdateProductCategories(model.Product.ProductId, selectedCategories);
-            
-            
+
             this.AddFlashMessage("Produkt bol úspešne pridaný", FlashMessageType.Success);
             return RedirectToAction("Manage");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var product = productManager.FindProductById(id);
+            productManager.DeleteProduct(id);
+            this.AddFlashMessage("Produkt bol úspešne odstránený", FlashMessageType.Success);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Clear(int id)
+        {
+            var product = productManager.FindProductById(id);
+            productManager.CleanProduct(id);
+            this.AddFlashMessage("Produkt bol upravený", FlashMessageType.Success);
+            return RedirectToAction("Manage", new { url = product.Url });
         }
 
     }

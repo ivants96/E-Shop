@@ -14,5 +14,7 @@ namespace E_Shop.Data.Repositories
         {
             return dbSet.SingleOrDefault(p => p.Url == url && !p.Hidden);
         }
+
+        
     }
 }

@@ -22,7 +22,8 @@ using E_Shop.Data.Interfaces;
 namespace E_Shop
 {
     public class Startup
-    {
+    {       
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,7 +44,8 @@ namespace E_Shop
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"))
-                    .UseLazyLoadingProxies());
+                    .UseLazyLoadingProxies()
+                    .EnableSensitiveDataLogging(true));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {

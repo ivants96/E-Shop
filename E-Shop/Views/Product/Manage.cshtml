@@ -69,6 +69,18 @@
             <span asp-validation-for="PostedCategories" class="text-danger"></span>
         </div>
     </div>
+    <div>
+        <a asp-controller="Product" asp-action="Clear" asp-route-id="@Model.Product.ProductId" class="btn btn-info mt-1 mb-1">Odstrániť kategórie</a>
+
+
+        <h5>Tento produkt momentalne spadá pod tieto kategórie:</h5>
+        <ul>
+            @foreach (var cp in Model.Product.CategoryProducts)
+            {
+                <li>@cp.Category.Title</li>
+            }
+        </ul>
+    </div>
     <div class="form-group">
         <label asp-for="Product.Price" class="control-label"></label>
         <input asp-for="Product.Price" class="form-control" />
@@ -94,10 +106,22 @@
             </label>
         </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Uložiť" class="btn btn-default" />
-    </div>
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <div class="form-group">
+                <input type="submit" value="Uložiť" class="btn btn-success btn-lg" />
+            </div>
+        </li>
+        <li class="list-inline-item">
+            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Product.ProductId" class="btn btn-lg btn-danger">Vymazať produkt</a>
+        </li>
+    </ul>
 </form>
+
+
+
+
+
 
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.1/tinymce.min.js"></script>

@@ -22,7 +22,8 @@ namespace E_Shop.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder);                       
+            
             builder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(10,1)");
             builder.Entity<Product>().Property(x => x.OldPrice).HasColumnType("decimal(10,1)");
 

@@ -1,8 +1,10 @@
 ﻿using E_Shop.Business.Interfaces;
+using E_Shop.Data.Interfaces;
 using E_Shop.Data.Models;
 using E_Shop.Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace E_Shop.Business.Managers
@@ -10,16 +12,17 @@ namespace E_Shop.Business.Managers
     public class ProductManager : IProductManager
     {
         private IProductRepository productRepository;
+        private ICategoryProductRepository categoryProductRepository;
 
-        public ProductManager(IProductRepository productRepository)
+        public ProductManager(IProductRepository productRepository, ICategoryProductRepository categoryProductRepository)
         {
             this.productRepository = productRepository;
+            this.categoryProductRepository = categoryProductRepository;
         }
-
 
         public Product FindProductById(int id)
         {
-           return productRepository.FindById(id);
+            return productRepository.FindById(id);
         }
 
         public Product FindProductByUrl(string url)
@@ -28,30 +31,24 @@ namespace E_Shop.Business.Managers
         }
 
         public void SaveProduct(Product product)
-        {
-            var oldProduct = productRepository.FindById(product.ProductId);
-            productRepository.Add(product);
-
-            if (oldProduct != null)
-            {
-                CleanProduct(oldProduct);
-            }
+        {               
+            productRepository.Update(product);                       
         }
 
-        public void CleanProduct(Product oldProduct)
+        public void CleanProduct(int id)
         {
-            try
-            {
-                productRepository.Delete(oldProduct.ProductId);
-            }
-            catch (Exception)
-            {
-                oldProduct.CategoryProducts.Clear();    // odstraníme produkt z kategorií
-                oldProduct.Hidden = true;               // a skryjeme ho
-                productRepository.Update(oldProduct);
-            }
+            var product = FindProductById(id);
+            product.CategoryProducts.Clear();
+            productRepository.Update(product);
         }
 
-        
+        public void DeleteProduct(int id)
+        {
+            var product = FindProductById(id);
+            product.CategoryProducts.Clear();
+            productRepository.Delete(id);
+        }
+
+
     }
 }

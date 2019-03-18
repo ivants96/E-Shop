@@ -10,6 +10,8 @@ namespace E_Shop.Business.Interfaces
         Product FindProductById(int id);
         Product FindProductByUrl(string url);
         void SaveProduct(Product product);
-        void CleanProduct(Product oldProduct);
+        void CleanProduct(int id);
+        void DeleteProduct(int id);
+        
     }
 }
