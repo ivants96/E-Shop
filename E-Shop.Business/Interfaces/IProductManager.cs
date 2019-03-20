@@ -1,4 +1,5 @@
 ﻿using E_Shop.Data.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,12 @@ namespace E_Shop.Business.Interfaces
         Product FindProductById(int id);
         Product FindProductByUrl(string url);
         void SaveProduct(Product product);
-        void CleanProduct(int id);
+        void ClearProductCategories(int id);
         void DeleteProduct(int id);
-        
+        void SaveProductImages(Product product, List<IFormFile> images);
+        void RemoveProductImage(int productId, int imageIndex);
+
+
+
     }
 }

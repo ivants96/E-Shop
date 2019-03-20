@@ -23,13 +23,13 @@ namespace E_Shop.Business.Managers
         public ImageManager(string outputDirectoryPath) => this.OutputDirectoryPath = outputDirectoryPath;
 
         /// <summary>
-        /// Obalující metoda pro uložení obrázku ze vstupu.
+        /// Obaľujúca metóda pre uloženie obrázku zo vstupu.
         /// </summary>
-        /// <param name="file">Nezpracovaný soubor s obrázkem k uložení.</param>
-        /// <param name="fileName">Název souboru po uložení (bez přípony).</param>
-        /// <param name="extension">Formát, ve kterém se má obrázek uložit.</param>
-        /// <param name="width">Šířka obrázku po uložení (nepovinný parametr).</param>
-        /// <param name="height">Výška obrázku po uložení (nepovinný parametr).</param>
+        /// <param name="file">Nezpracovaný súbor s obrázkom k uloženiu.</param>
+        /// <param name="fileName">Názov súboru po uložení (bez prípony).</param>
+        /// <param name="extension">Formát, v ktorom sa má obrázok uložiť.</param>
+        /// <param name="width">Šířka obrázku po uložení (nepovinný parameter).</param>
+        /// <param name="height">Výška obrázku po uložení (nepovinný parameter).</param>
         public void SaveImage(IFormFile file, string fileName, ImageExtension extension, int width = 0, int height = 0)
         {
             using (var stream = new MemoryStream())
@@ -37,7 +37,7 @@ namespace E_Shop.Business.Managers
                 file.CopyTo(stream);
                 var img = Image.Load(stream.ToArray());
 
-                // ImageSharp defaultně zachová poměr stran, pokud je některý rozměr == 0
+                // ImageSharp defaultne zachová pomer strán, ak je niektorý rozmer == 0
                 ResizeImage(img, width, height);
 
                 IImageEncoder encoder;
@@ -69,7 +69,7 @@ namespace E_Shop.Business.Managers
 
         private Image<Rgba32> ResizeImage(Image<Rgba32> image, int width = 0, int height = 0)
         {
-            // ImageSharp defaultně zachová poměr stran, pokud je některý rozměr == 0
+            // ImageSharp defaultne zachová pomer strán, ak je niektorý rozmer == 0
             if (width > 0 || height > 0)
             {
                 image.Mutate(x => x.Resize(

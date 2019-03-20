@@ -19,14 +19,11 @@ namespace E_Shop.Controllers
     {
         IProductManager productManager;
         ICategoryManager categoryManager;
-        ICategoryProductRepository categoryProductRepository;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager,
-            ICategoryProductRepository categoryProductRepository)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager)
         {
             this.productManager = productManager;
             this.categoryManager = categoryManager;
-            this.categoryProductRepository = categoryProductRepository;
         }
 
         [HttpGet]
@@ -91,7 +88,7 @@ namespace E_Shop.Controllers
         public IActionResult Clear(int id)
         {
             var product = productManager.FindProductById(id);
-            productManager.CleanProduct(id);
+            productManager.ClearProductCategories(id);
             this.AddFlashMessage("Produkt bol upravený", FlashMessageType.Success);
             return RedirectToAction("Manage", new { url = product.Url });
         }

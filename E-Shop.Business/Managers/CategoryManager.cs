@@ -36,11 +36,6 @@ namespace E_Shop.Business.Managers
             {
                 throw new ArgumentNullException($"Product {productId} was not found");
             }
-            else
-            {
-                product.CategoryProducts.Clear();
-            }
-                                      
 
             for (int i = 0; i < categories.Length; i++)
             {
@@ -53,7 +48,6 @@ namespace E_Shop.Business.Managers
                 categoryProductRepository.Update(toAdd);
 
             }
-           // productRepository.Update(product);
         }
 
 
