@@ -11,3 +11,27 @@ a:hover {
 #loginModalHeader {
     background-color: #CAE4FA;
 }
+
+#product-images-administration img {
+    width: auto;
+    height: auto;
+    max-width: 128px;
+    max-height: 128px;
+    vertical-align: middle;
+}
+
+#product-images-administration a {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+#product-images-administration > div {
+    display: inline-block;
+    width: 138px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}

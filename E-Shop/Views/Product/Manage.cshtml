@@ -42,7 +42,7 @@
             {
                 <div>
                     <img src="/images/products/@(Model.Product.ProductId)_@(i).jpeg" alt="@Model.Product.Title - @(i+1)" />
-                    <a href="#" data-image-index="@i"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    <a href="#" data-image-index="@i"><span aria-hidden="true" class="fa fa-remove"></span></a>
                 </div>
             }
         }
@@ -54,7 +54,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <div class="form-group">+
+            <div class="form-group">                
                 <label asp-for="PostedCategories" class="control-label col-md-2" style="padding-left:0px;"></label>
                 <div class="col-md-10">
                     <div style="padding-left:20px;">
@@ -128,4 +128,31 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.1/tinymce.min.js"></script>
     <script src="~/js/initTinyMCE.js"></script>
+    <script>
+    $(document).ready(function () {
+        $("#product-images-administration a").click(function (e) {
+            if (confirm('Naozaj si prajete odstrániť vybraný náhľad?')) {
+                var element = $(this);
+                $.post('@Url.Action("DeleteImage")', { productID: $('#Product_ProductId').val(), imageIndex: element.data('image-index') }, function (result) {
+                    // Posun IDčiek za odstraněným obrázkom o 1 dozadu
+                    var oldUrls = element.parent().nextAll().children("a");
+                    for (var i = 0; i < $(oldUrls).length; i++) {
+                        var newIndex = $(oldUrls[i]).data('image-index') - 1;
+                        $(oldUrls[i]).data('image-index', newIndex);
+                    }
+                    // Odstranenie náhľadu obrázku
+                    element.parent().remove();
+                    // Zníženie počtu obrázkov v skrytom poli
+                    var imagesCount = $('#Product_ImagesCount');
+                    var currentVal = parseInt(imagesCount.val());
+                    if (!isNaN(currentVal) && currentVal > 0) {
+                        imagesCount.val(currentVal - 1);
+                    }
+                });
+            }
+        });
+    });
+    </script>
 }
+
+

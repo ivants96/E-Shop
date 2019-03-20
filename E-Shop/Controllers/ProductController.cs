@@ -72,6 +72,7 @@ namespace E_Shop.Controllers
             // uloženie produktu aj s jeho väzbami                                    
             productManager.SaveProduct(model.Product);
             categoryManager.UpdateProductCategories(model.Product.ProductId, selectedCategories);
+            productManager.SaveProductImages(model.Product, model.UploadedImages);
 
             this.AddFlashMessage("Produkt bol úspešne pridaný", FlashMessageType.Success);
             return RedirectToAction("Manage");
@@ -91,6 +92,12 @@ namespace E_Shop.Controllers
             productManager.ClearProductCategories(id);
             this.AddFlashMessage("Produkt bol upravený", FlashMessageType.Success);
             return RedirectToAction("Manage", new { url = product.Url });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public void DeleteImage(int productID, int imageIndex)
+        {
+            productManager.RemoveProductImage(productID, imageIndex);
         }
 
     }
