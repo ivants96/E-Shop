@@ -8,5 +8,6 @@ namespace E_Shop.Data.Interfaces
     public interface ICategoryRepository : IRepository<Category>
     {
         List<Category> GetLeaves();
+        List<Category> GetRoots();
     }
 }

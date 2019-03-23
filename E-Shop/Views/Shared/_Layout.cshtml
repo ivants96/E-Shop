@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using E_Shop.Data.Models
 @using E_Shop.Extensions
-
+@using E_Shop.Business.Interfaces
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@inject ICategoryManager CategoryManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,7 +98,8 @@
     <div class="container">
         @Html.RenderFlashMessages()
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 bg-light">
+                @Html.RenderCategories(CategoryManager.GetRoots())
 
             </div>
             <div class="col-sm-9">

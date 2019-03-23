@@ -53,8 +53,16 @@ namespace E_Shop.Business.Managers
         public void DeleteProduct(int id)
         {
             var product = FindProductById(id);
+
+            int imagesCount = product.ImagesCount;
+            RemoveThumbnailFile(product.ProductId);// odstranění thumbnailu
+            for (int i = 0; i < imagesCount; i++)// odstránenie obrázkov
+            {
+                RemoveImageFile(product.ProductId, i);
+            }
             product.CategoryProducts.Clear();
             productRepository.Delete(id);
+            
         }
 
         public void SaveProductImages(Product product, List<IFormFile> images)

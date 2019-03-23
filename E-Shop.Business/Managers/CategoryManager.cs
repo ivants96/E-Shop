@@ -2,6 +2,7 @@
 using E_Shop.Data.Interfaces;
 using E_Shop.Data.Models;
 using E_Shop.Data.Repositories;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,30 @@ namespace E_Shop.Business.Managers
         private IProductRepository productRepository;
         private ICategoryRepository categoryRepository;
         private ICategoryProductRepository categoryProductRepository;
+        private IMemoryCache memoryCache;
 
         public CategoryManager(IProductRepository productRepository, ICategoryRepository categoryRepository,
-            ICategoryProductRepository categoryProductRepository)
+            ICategoryProductRepository categoryProductRepository, IMemoryCache memoryCache)
         {
             this.productRepository = productRepository;
             this.categoryRepository = categoryRepository;
             this.categoryProductRepository = categoryProductRepository;
+            this.memoryCache = memoryCache;
         }
 
         public List<Category> GetLeaves()
         {
             return categoryRepository.GetLeaves();
+        }
+
+        public List<Category> GetRoots()
+        {
+            if(!memoryCache.TryGetValue("CategoryRoots", out List<Category> result))
+            {
+                result = categoryRepository.GetRoots();
+                memoryCache.Set("CategoryRoots", result, new DateTimeOffset(DateTime.Now.AddHours(1)));
+            }
+            return result;
         }
 
         public void UpdateProductCategories(int productId, int[] categories) //Enter product id and array of categories you wish to add
@@ -49,6 +62,8 @@ namespace E_Shop.Business.Managers
 
             }
         }
+
+
 
 
 

@@ -16,6 +16,12 @@ namespace E_Shop.Data.Repositories
             // Gets categories that are last in a tree of categories e.g It gets Dynamic from tree rMusicEquipment-Microphones-Dynamic
             return dbSet.Where(c => c.ChildCategories.Count == 0 && !c.Hidden).ToList();            
         }
-        
+
+        public List<Category> GetRoots()
+        {
+            return dbSet.Where(c => c.ParentCategoryId == null && !c.Hidden)
+                .OrderBy(c => c.OrderNo)
+                .ToList();
+        }
     }
 }
