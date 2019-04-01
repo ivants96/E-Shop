@@ -1,0 +1,74 @@
+﻿@model ProductIndexViewModel
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Produkty";
+}
+<link href="~/css/thumbnail.css" rel="stylesheet" />
+<form>
+    <div class="row bg-light">
+        <div class="col-md-4">
+            <label asp-for="SortCriteria">Zoradiť podľa</label>
+            <select asp-for="SortCriteria" asp-items="Model.SortList" class="form-control">    </select>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="StartPrice">Cena od</label>
+            <input asp-for="StartPrice" class="form-control">
+        </div>
+        <div class="col-md-2">
+            <label asp-for="EndPrice">Cena do</label>
+            <input asp-for="EndPrice" class="form-control">
+        </div>
+        <div class="col-md-2" style="text-align: center;">
+            <label asp-for="InStock">Skladom</label>
+            <input asp-for="InStock" class="form-control">
+        </div>
+        <div class="col mt-3">
+            <input type="submit" name="" value="Filtrovať" id="" class="btn btn-primary form-control">
+        </div>
+    </div>
+</form>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model.Products)
+        {
+            <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6">
+                @{
+                    if (this.Context.User.IsInRole("Admin"))
+                    {
+                        <partial name="_AdminProductThumbnailView" model="p" />
+                    }
+                    else
+                    {
+                        <partial name="_UserProductThumbnailView" model="p" />
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            Stránka @Model.Products.PageNumber z @Model.Products.PageCount
+            @Html.PagedListPager(Model.Products, page => Url.Action("Index",
+           new
+           {
+               page,
+               Model.CurrentCategoryId,
+               Model.CurrentPhrase,
+               Model.StartPrice,
+               Model.EndPrice,
+               Model.SortCriteria,
+               Model.InStock
+           }))
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/confirm.js"></script>
+}

@@ -97,12 +97,12 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("Categories");
 
                     b.HasData(
-                        new { CategoryId = 1, Hidden = false, OrderNo = 1, Title = "Obývací pokoj", Url = "obyvaci-pokoj" },
-                        new { CategoryId = 2, Hidden = false, OrderNo = 4, Title = "Kuchyně", Url = "kuchyne" },
+                        new { CategoryId = 1, Hidden = false, OrderNo = 1, Title = "Obývačka", Url = "obyvacka" },
+                        new { CategoryId = 2, Hidden = false, OrderNo = 4, Title = "Kuchyňa", Url = "kuchyna" },
                         new { CategoryId = 3, Hidden = false, OrderNo = 2, ParentCategoryId = 1, Title = "Záclony", Url = "zaclony" },
-                        new { CategoryId = 4, Hidden = false, OrderNo = 3, ParentCategoryId = 1, Title = "Květináče", Url = "kvetinace" },
-                        new { CategoryId = 5, Hidden = false, OrderNo = 5, ParentCategoryId = 2, Title = "Nádobí", Url = "nadobi" },
-                        new { CategoryId = 6, Hidden = false, OrderNo = 6, ParentCategoryId = 2, Title = "Kuchyňské desky", Url = "kuchynske-desky" }
+                        new { CategoryId = 4, Hidden = false, OrderNo = 3, ParentCategoryId = 1, Title = "Kvetináče", Url = "kvetinace" },
+                        new { CategoryId = 5, Hidden = false, OrderNo = 5, ParentCategoryId = 2, Title = "Riad", Url = "riad" },
+                        new { CategoryId = 6, Hidden = false, OrderNo = 6, ParentCategoryId = 2, Title = "Kuchynské dosky", Url = "kuchynske-dosky" }
                     );
                 });
 
@@ -141,10 +141,6 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,1)");
-
-                    b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasMaxLength(255);
 
                     b.Property<int>("Stock");
 
@@ -185,8 +181,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "f54935da-b9cb-41a2-885f-2f3074204437", ConcurrencyStamp = "66ac92f9-7bc4-49ed-ba26-0f61c5659cce", Name = "User" },
-                        new { Id = "0eea957a-0362-4db0-b9a3-1525828b2c0b", ConcurrencyStamp = "bddfe818-b77b-47cf-896f-bce7facc37f4", Name = "Admin" }
+                        new { Id = "e101751d-3240-4b50-b594-40e44eb48bc6", ConcurrencyStamp = "5c20167f-90e0-4a67-9d4c-cb35c7c6b718", Name = "User" },
+                        new { Id = "6fa174bf-cd93-4b29-bdf5-674da38c8ce9", ConcurrencyStamp = "0999cd4f-e951-4974-b050-518e759c9956", Name = "Admin" }
                     );
                 });
 

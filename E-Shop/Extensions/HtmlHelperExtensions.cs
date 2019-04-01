@@ -44,17 +44,21 @@ namespace E_Shop.Extensions
                     TagBuilder h6 = new TagBuilder("h6");
                     TagBuilder parentCategoryAnchorTag = new TagBuilder("a");
                     TagBuilder ul = new TagBuilder("ul");
-
+                    TagBuilder i = new TagBuilder("i");
 
                     h6.InnerHtml.AppendHtml(parentCategoryAnchorTag);
 
+                    i.AddCssClass("fa fa-arrow-down");
+
                     parentCategoryAnchorTag.AddCssClass("text-danger");
-                    parentCategoryAnchorTag.InnerHtml.SetContent(category.Title);
+                    parentCategoryAnchorTag.InnerHtml.SetContent(category.Title + " ");
                     parentCategoryAnchorTag.Attributes.Add("role", "button");
                     parentCategoryAnchorTag.Attributes.Add("href", "#" + id.Split(" ").First());
                     parentCategoryAnchorTag.Attributes.Add("data-toggle", "collapse");
                     parentCategoryAnchorTag.Attributes.Add("aria-expanded", "false");
                     parentCategoryAnchorTag.Attributes.Add("aria-controls", id.Split(" ").First());
+
+                    parentCategoryAnchorTag.InnerHtml.AppendHtml(i);
 
                     ul.AddCssClass("list-inline collapse ml-2");
                     ul.Attributes.Add("id", id.Split(" ").First());
@@ -64,7 +68,8 @@ namespace E_Shop.Extensions
                         TagBuilder li = new TagBuilder("li");
                         TagBuilder anchorTag = new TagBuilder("a");
 
-                        anchorTag.InnerHtml.SetContent(childCategory.Title);
+                        anchorTag.Attributes.Add("href", "/Product/Index?id=" + childCategory.CategoryId);
+                        anchorTag.InnerHtml.SetContent("- " + childCategory.Title);
                         anchorTag.AddCssClass("text-info");
 
                         li.InnerHtml.AppendHtml(anchorTag);

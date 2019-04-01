@@ -34,11 +34,6 @@ namespace E_Shop.Data.Models
         [Display(Name = "Titulok")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Vyplňte krátký popis ")]
-        [StringLength(255, ErrorMessage = "Krátký popis je príliš dlhý")]
-        [Display(Name = "Krátký popis")]
-        public string ShortDescription { get; set; }
-
         [Required(ErrorMessage = "Vyplňte popis ")]
         [Display(Name = "Popis")]
         public string Description { get; set; }
@@ -65,6 +60,13 @@ namespace E_Shop.Data.Models
         public bool Hidden { get; set; }
 
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
+
+        [NotMapped]
+        public double Rating => 2.5;
+
+        [NotMapped]
+        public int DiscountPercent => OldPrice.HasValue && OldPrice.Value > Price ? (int)Math.Round((OldPrice.Value - Price) / OldPrice.Value * 100) : 0;
+
 
     }
 }

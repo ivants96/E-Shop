@@ -9,8 +9,10 @@ using E_Shop.Data.Models;
 using E_Shop.Data.Repositories;
 using E_Shop.Extensions;
 using E_Shop.Models;
+using E_Shop.Models.ProductViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace E_Shop.Controllers
 {
@@ -98,6 +100,51 @@ namespace E_Shop.Controllers
         public void DeleteImage(int productID, int imageIndex)
         {
             productManager.RemoveProductImage(productID, imageIndex);
+        }
+
+        const int pageSize = 6;
+        
+        public IActionResult Index(int? id, string searchPhrase, int? page, ProductIndexViewModel model)
+        {
+            //ToPagedList (1, pageSize) - return 1 of n pages, one page can contain number set in pageSize at most
+
+            //id = categoryId, click on category in menu
+            if (id.HasValue)
+            {
+                searchPhrase = string.Empty;
+                model.Products = productManager.FindByCategoryId(id.Value).ToPagedList(1, pageSize); 
+                model.CurrentPhrase = string.Empty;
+                model.CurrentCategoryId = id;
+            }
+            else if (searchPhrase != null)  //search product in search form
+            {
+                model.Products = productManager.SearchProducts(searchPhrase).ToPagedList(1, pageSize);
+                model.CurrentPhrase = searchPhrase;
+                model.CurrentCategoryId = null;
+            }
+            else if(searchPhrase == null)
+            {
+                return RedirectToAction("ProductNotFound");
+            }            
+            else //filtering or sorting products or click on next page
+            {
+                searchPhrase = model.CurrentPhrase;
+                model.Products = productManager.SearchProducts(
+                    model.CurrentPhrase,
+                    model.CurrentCategoryId,
+                    model.SortCriteria ?? "rating",
+                    model.StartPrice ?? 0,
+                    model.EndPrice ?? 0,
+                    model.InStock)
+                    .ToPagedList(page ?? 1, pageSize);
+            }
+            ViewData["SearchPhrase"] = searchPhrase;
+            return View(model);
+        }
+
+        public IActionResult ProductNotFound()
+        {
+            return View();
         }
 
     }

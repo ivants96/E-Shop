@@ -15,6 +15,18 @@ namespace E_Shop.Business.Interfaces
         void DeleteProduct(int id);
         void SaveProductImages(Product product, List<IFormFile> images);
         void RemoveProductImage(int productId, int imageIndex);
+        List<Product> FindByCategoryId(int categoryId);
+        List<Product> SearchProducts(string searchPhrase);
+        List<Product> SearchProducts
+            (
+            string searchPhrase,
+            int? categoryId = null,
+            string orderBy = "rating",
+            decimal startPrice = 0,
+            decimal endPrice = 0,
+            bool inStock = false
+            );
+
 
 
 

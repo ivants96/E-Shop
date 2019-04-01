@@ -56,13 +56,13 @@ namespace E_Shop.Data
 
             builder.Entity<Category>().HasData
             (
-                new Category() { CategoryId = 1, Title = "Obývací pokoj", Url = "obyvaci-pokoj", OrderNo = 1, Hidden = false },
-                new Category() { CategoryId = 2, Title = "Kuchyně", Url = "kuchyne", OrderNo = 4, Hidden = false },
+                new Category() { CategoryId = 1, Title = "Obývačka", Url = "obyvacka", OrderNo = 1, Hidden = false },
+                new Category() { CategoryId = 2, Title = "Kuchyňa", Url = "kuchyna", OrderNo = 4, Hidden = false },
 
                 new Category() { CategoryId = 3, ParentCategoryId = 1, Title = "Záclony", Url = "zaclony", OrderNo = 2, Hidden = false },
-                new Category() { CategoryId = 4, ParentCategoryId = 1, Title = "Květináče", Url = "kvetinace", OrderNo = 3, Hidden = false },
-                new Category() { CategoryId = 5, ParentCategoryId = 2, Title = "Nádobí", Url = "nadobi", OrderNo = 5, Hidden = false },
-                new Category() { CategoryId = 6, ParentCategoryId = 2, Title = "Kuchyňské desky", Url = "kuchynske-desky", OrderNo = 6, Hidden = false }
+                new Category() { CategoryId = 4, ParentCategoryId = 1, Title = "Kvetináče", Url = "kvetinace", OrderNo = 3, Hidden = false },
+                new Category() { CategoryId = 5, ParentCategoryId = 2, Title = "Riad", Url = "riad", OrderNo = 5, Hidden = false },
+                new Category() { CategoryId = 6, ParentCategoryId = 2, Title = "Kuchynské dosky", Url = "kuchynske-dosky", OrderNo = 6, Hidden = false }
             );
 
 

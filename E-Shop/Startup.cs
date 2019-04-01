@@ -18,6 +18,7 @@ using E_Shop.Business.Managers;
 using E_Shop.Business.Interfaces;
 using E_Shop.Data.Repositories;
 using E_Shop.Data.Interfaces;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace E_Shop
 {
@@ -47,6 +48,7 @@ namespace E_Shop
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"))
                     .UseLazyLoadingProxies()
+                    .ConfigureWarnings(x => x.Ignore(CoreEventId.LazyLoadOnDisposedContextWarning))
                     .EnableSensitiveDataLogging(true));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

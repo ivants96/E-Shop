@@ -41,7 +41,7 @@ namespace E_Shop.Business.Managers
         {
             productRepository.Update(product);
         }
-               
+
 
         public void ClearProductCategories(int id)
         {
@@ -62,13 +62,13 @@ namespace E_Shop.Business.Managers
             }
             product.CategoryProducts.Clear();
             productRepository.Delete(id);
-            
+
         }
 
         public void SaveProductImages(Product product, List<IFormFile> images)
         {
             int imagesCount = 0;
-                        
+
             // nahrávanie ďalších obrázkov 
             if (images != null)
             {
@@ -117,7 +117,7 @@ namespace E_Shop.Business.Managers
 
             // Mažeme obrázok
             RemoveImageFile(productId, imageIndex);
-           
+
             // Aktualizácia obrázkov produktu
             product.ImagesCount--;
             productRepository.Update(product);
@@ -153,8 +153,66 @@ namespace E_Shop.Business.Managers
             {
                 File.Delete(thumbFileName);
             }
-        }          
-        
+        }
+
+        public List<Product> FindByCategoryId(int categoryId)
+        {
+            return productRepository.FindByCategoryId(categoryId);
+        }
+
+        public List<Product> SearchProducts(string searchPhrase)
+        {
+            return productRepository.SearchProducts(searchPhrase);
+        }
+
+        public List<Product> SearchProducts(string searchPhrase, int? categoryId = null, string orderBy = "rating", decimal startPrice = 0, decimal endPrice = 0, bool inStock = false)
+        {
+            var result = SearchProducts(searchPhrase);
+            
+            if (categoryId.HasValue)
+            {
+                result = result.Where(p => p.CategoryProducts
+               .Select(cp => cp.CategoryId)
+               .Contains(categoryId.Value))
+               .ToList();
+            }
+            if (startPrice > 0)
+            {
+                result = result.Where(p => p.Price >= startPrice).ToList();
+            }
+            if (endPrice > 0)
+            {
+                result = result.Where(p => p.Price <= endPrice).ToList();
+            }
+            if (inStock)
+            {
+                result = result.Where(p => p.Stock > 0).ToList();
+            }
+
+            switch (orderBy.ToLower())
+            {
+                case "lowest_price":
+                    result = result.OrderBy(p => p.Price).ToList();
+                    break;
+                case "highest_price":
+                    result = result.OrderByDescending(p => p.Price).ToList();
+                    break;
+                case "newest":
+                    result = result.OrderByDescending(p => p.ProductId).ToList();
+                    break;
+                default:
+                    result = result.OrderByDescending(p => p.Rating)
+                        .ThenByDescending(p => p.ProductId)
+                        .ToList();
+                    break;
+
+            }
+            return result;
+        }
+
+
+
+
 
     }
 }

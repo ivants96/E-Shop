@@ -8,6 +8,8 @@ namespace E_Shop.Data.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {
-        Product FindByUrl(string url);  
+        Product FindByUrl(string url);
+        List<Product> FindByCategoryId(int categoryId);
+        List<Product> SearchProducts(string searchPhrase);
     }
 }

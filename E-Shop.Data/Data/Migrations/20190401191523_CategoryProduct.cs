@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_Shop.Data.Migrations
 {
-    public partial class RelationshipCreate : Migration
+    public partial class CategoryProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,6 @@ namespace E_Shop.Data.Migrations
                     Code = table.Column<string>(maxLength: 255, nullable: false),
                     Url = table.Column<string>(maxLength: 255, nullable: false),
                     Title = table.Column<string>(maxLength: 255, nullable: false),
-                    ShortDescription = table.Column<string>(maxLength: 255, nullable: false),
                     Description = table.Column<string>(nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,1)", nullable: false),
                     OldPrice = table.Column<decimal>(type: "decimal(10,1)", nullable: true),
@@ -105,8 +104,8 @@ namespace E_Shop.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "f54935da-b9cb-41a2-885f-2f3074204437", "66ac92f9-7bc4-49ed-ba26-0f61c5659cce", "User", null },
-                    { "0eea957a-0362-4db0-b9a3-1525828b2c0b", "bddfe818-b77b-47cf-896f-bce7facc37f4", "Admin", null }
+                    { "e101751d-3240-4b50-b594-40e44eb48bc6", "5c20167f-90e0-4a67-9d4c-cb35c7c6b718", "User", null },
+                    { "6fa174bf-cd93-4b29-bdf5-674da38c8ce9", "0999cd4f-e951-4974-b050-518e759c9956", "Admin", null }
                 });
 
             migrationBuilder.InsertData(
@@ -114,8 +113,8 @@ namespace E_Shop.Data.Migrations
                 columns: new[] { "CategoryId", "Hidden", "OrderNo", "ParentCategoryId", "Title", "Url" },
                 values: new object[,]
                 {
-                    { 1, false, 1, null, "Obývací pokoj", "obyvaci-pokoj" },
-                    { 2, false, 4, null, "Kuchyně", "kuchyne" }
+                    { 1, false, 1, null, "Obývačka", "obyvacka" },
+                    { 2, false, 4, null, "Kuchyňa", "kuchyna" }
                 });
 
             migrationBuilder.InsertData(
@@ -124,9 +123,9 @@ namespace E_Shop.Data.Migrations
                 values: new object[,]
                 {
                     { 3, false, 2, 1, "Záclony", "zaclony" },
-                    { 4, false, 3, 1, "Květináče", "kvetinace" },
-                    { 5, false, 5, 2, "Nádobí", "nadobi" },
-                    { 6, false, 6, 2, "Kuchyňské desky", "kuchynske-desky" }
+                    { 4, false, 3, 1, "Kvetináče", "kvetinace" },
+                    { 5, false, 5, 2, "Riad", "riad" },
+                    { 6, false, 6, 2, "Kuchynské dosky", "kuchynske-dosky" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,12 +225,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "0eea957a-0362-4db0-b9a3-1525828b2c0b", "bddfe818-b77b-47cf-896f-bce7facc37f4" });
+                keyValues: new object[] { "6fa174bf-cd93-4b29-bdf5-674da38c8ce9", "0999cd4f-e951-4974-b050-518e759c9956" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "f54935da-b9cb-41a2-885f-2f3074204437", "66ac92f9-7bc4-49ed-ba26-0f61c5659cce" });
+                keyValues: new object[] { "e101751d-3240-4b50-b594-40e44eb48bc6", "5c20167f-90e0-4a67-9d4c-cb35c7c6b718" });
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
