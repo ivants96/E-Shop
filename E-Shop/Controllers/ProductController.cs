@@ -142,9 +142,20 @@ namespace E_Shop.Controllers
             return View(model);
         }
 
-        public IActionResult ProductNotFound()
+        public IActionResult ProcessStockForm(int productId, int quantity)
         {
-            return View();
+            productManager.AddToStock(productId, quantity);
+            this.AddFlashMessage("Počet produktov na sklade bol zmenený", FlashMessageType.Success);
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        public IActionResult Detail (string url)
+        {
+            var model = new ProductDetailViewModel()
+            {
+                Product = productManager.FindProductByUrl(url)
+            };
+            return View(model);
         }
 
     }

@@ -26,7 +26,7 @@ namespace E_Shop.Business.Interfaces
             decimal endPrice = 0,
             bool inStock = false
             );
-
+        void AddToStock(int productId, int quantity);
 
 
 

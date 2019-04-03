@@ -210,9 +210,11 @@ namespace E_Shop.Business.Managers
             return result;
         }
 
-
-
-
-
+        public void AddToStock(int productId, int quantity)
+        {
+            var product = FindProductById(productId);
+            product.Stock += quantity;
+            productRepository.Update(product);
+        }
     }
 }

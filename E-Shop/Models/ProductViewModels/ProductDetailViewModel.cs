@@ -9,7 +9,6 @@ namespace E_Shop.Models.ProductViewModels
     public class ProductDetailViewModel
     {
         public Product Product { get; set; }
-        public int Vat { get; set; }
-        public bool IsVatPayer { get; set; }
+
     }
 }

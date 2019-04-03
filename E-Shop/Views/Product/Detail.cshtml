@@ -1,0 +1,113 @@
+﻿@model ProductDetailViewModel
+
+@{
+    ViewData["Title"] = "Produkt";
+}
+
+<div id="productImagesCarousel" class="carousel slide" data-ride="carousel" style="width:50%">
+    <ol class="carousel-indicators">
+        @for (int i = 0; i < Model.Product.ImagesCount; i++)
+        {
+            var cls = (i == 0) ? "active" : "";
+            <li data-target="#productImagesCarousel" data-slide-to="@i" class="@cls"></li>
+        }
+
+    </ol>
+    <div class="carousel-inner">
+        @for (int i = 0; i < Model.Product.ImagesCount; i++)
+        {
+            var cls = (i == 0) ? "active" : "";
+            string path = "~/images/products/" + Model.Product.ProductId.ToString() + "_" + i.ToString() + ".jpeg";
+
+            <div class="carousel-item @cls"><img class="d-block w-100 h-100" src="@Url.Content(path)" alt="@Model.Product.Title"></div>
+        }
+        @if (Model.Product.ImagesCount == 0)
+        {
+            string path = "~/images/products/not_found.png";
+            <div class="carousel-item active"><img style="height:500px" class="d-block w-100" src="@Url.Content(path)" alt="@Model.Product.Title"></div>
+        }
+    </div>
+    <a class="carousel-control-prev" href="#productImagesCarousel" role="button" data-slide="prev">
+        <span class="fa fa-arrow-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#productImagesCarousel" role="button" data-slide="next">
+        <span class="fa fa-arrow-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<div class="bg-light">
+    <div>
+        <h2 class="text-primary">@Model.Product.Title</h2>
+        @{
+            if (this.Context.User.IsInRole("Admin"))
+            {
+                <div class="float-right">
+                    <h4>
+                        <a asp-controller="Product" asp-action="Manage" asp-route-url="@Model.Product.Url"><span class="fa fa-pencil text-info" aria-hidden="true"></span>Editovať</a>
+                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Product.ProductId" data-confirm="Naozaj chcete odstrániť produkt?"><span class="fa fa-remove text-danger" aria-hidden="true"></span>Odstrániť</a>
+                    </h4>
+                </div>
+            }
+        }
+        <p>
+            <rating value="@Model.Product.Rating"></rating>
+            0&nbsp;recenzí
+        </p>
+        <h4>
+            @{
+                if (Model.Product.DiscountPercent > 0)
+                {
+                    <span class="badge badge-pill badge-danger">- <em>@Model.Product.DiscountPercent</em> % &nbsp;</span>
+                    <small><s>&nbsp;@Model.Product.OldPrice.Value€&nbsp;</s></small>
+                }
+            }
+            <span class="float-right text-danger">
+                @Model.Product.Price€
+            </span>
+        </h4>
+        <h6>
+            Kód produktu: @Model.Product.Code
+        </h6>
+        @Html.Raw(Model.Product.Description)
+    </div>
+
+    <div class="mt-2">
+        <h4>
+            @{
+                if (Model.Product.Stock > 0)
+                {
+                    <span class="badge badge-pill badge-info float-right"> Skladom @Model.Product.Stock ks</span>
+                }
+                else
+                {
+                    <span class="text-danger float-right">Nie je na sklade</span>
+                }
+            }
+        </h4>
+    </div>
+
+    <div class="mt-5 w-25">
+        <div>
+            <form asp-action="ProcessCartForm" asp-controller="Product" method="post">
+                <div class="input-group">
+                    <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                    <input type="text" class="form-control input-quantity" name="quantity" value="1" />
+                    <button type="submit" name="add_to_cart" class="btn btn-primary"><span class="fa fa-shopping-cart" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </div>
+        <div class="mt-2">
+            <form asp-action="ProcessStockForm" asp-controller="Product" method="post">
+                <div class="input-group">
+                    <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                    <input type="text" class="form-control input-quantity" name="quantity" value="1" />
+                    <button type="submit" name="add_to_stock" class="btn btn-success"><span class="fa fa-plus" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/confirm.js"></script>
+}

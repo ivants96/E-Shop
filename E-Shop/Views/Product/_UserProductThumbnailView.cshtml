@@ -5,9 +5,9 @@
 <div class="text-center">
     @if(Model.DiscountPercent > 0)
     {
-    <span class="badge badge-pill badge-danger" style="position:absolute;">- @Model.DiscountPercent % &nbsp;</span>
+    <span class="badge badge-pill badge-danger" style="position:absolute;">- <em>@Model.DiscountPercent %</em> &nbsp;</span>
     }
-    <a href="~/images/products/@Model.Url">
+    <a asp-controller="Product" asp-action="Detail" asp-route-url="@Model.Url">
         @{ string imagePath = Model.ImagesCount > 0 ? "~/images/products/" + Model.ProductId + "_thumb.png" : "~/images/products/not_found.png";}
         <img class="product-image-background" style="width:100%; height:8em;" src=@Url.Content(imagePath)>
     </a>
@@ -15,7 +15,7 @@
 <div>
     <div style="height:5em">
         <h6>
-            <a class="text-primary productTitle">@Model.Title</a>
+            <a class="text-primary productTitle" asp-controller="Product" asp-action="Detail" asp-route-url="@Model.Url">@Model.Title</a>
         </h6>
     </div>
     <rating value="@Model.Rating" class="mb-2"></rating>
