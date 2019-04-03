@@ -62,7 +62,7 @@ namespace E_Shop.Data.Models
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 
         [NotMapped]
-        public double Rating => 2.5;
+        public int Rating => 3;
 
         [NotMapped]
         public int DiscountPercent => OldPrice.HasValue && OldPrice.Value > Price ? (int)Math.Round((OldPrice.Value - Price) / OldPrice.Value * 100) : 0;

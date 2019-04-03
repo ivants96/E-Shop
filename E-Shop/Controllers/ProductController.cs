@@ -122,10 +122,10 @@ namespace E_Shop.Controllers
                 model.CurrentPhrase = searchPhrase;
                 model.CurrentCategoryId = null;
             }
-            else if(searchPhrase == null)
-            {
-                return RedirectToAction("ProductNotFound");
-            }            
+            //else if(searchPhrase == null)
+            //{
+            //    return RedirectToAction("ProductNotFound");
+            //}            
             else //filtering or sorting products or click on next page
             {
                 searchPhrase = model.CurrentPhrase;

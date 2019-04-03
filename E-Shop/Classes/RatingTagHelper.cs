@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Shop.Classes
 {
+    [HtmlTargetElement("rating")]
     public class RatingTagHelper : TagHelper
     {
         private int value = 0;
@@ -19,6 +20,7 @@ namespace E_Shop.Classes
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "p";
+            output.TagMode = TagMode.StartTagAndEndTag;
             
             for (int i = 0; i < value; i++)
             {

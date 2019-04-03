@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-E_Shop-CB77B9C2-A23C-46D1-B3B6-CD2CFD482853</UserSecretsId>
+    <RootNamespace>E_Shop</RootNamespace>
+    <AssemblyName>E_Shop</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

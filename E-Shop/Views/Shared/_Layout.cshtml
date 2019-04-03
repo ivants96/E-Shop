@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - SparkyEShop</title>
     <environment include="Development">
         <link href="~/css/bootstrap.css" rel="stylesheet" />
@@ -96,18 +96,15 @@
     <div class="container">
         @Html.RenderFlashMessages()
         <div class="row">
-            <div class="col-md-3 bg-light">
+            <div class="col-md-2 bg-light">
                 @Html.RenderCategories(CategoryManager.GetRoots())
-
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 @RenderBody()
             </div>
         </div>
     </div>
-
-
-
+    
     <footer class="mt-5 bg-dark">
         <div class="container py-5 text-muted text-center">
             <p>Sparky Shop</p>

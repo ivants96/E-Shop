@@ -4,8 +4,8 @@
 @{
     ViewData["Title"] = "Produkty";
 }
-<link href="~/css/thumbnail.css" rel="stylesheet" />
-<form>
+
+<form asp-action="Index" asp-controller="Product" method="get">
     <div class="row bg-light">
         <div class="col-md-4">
             <label asp-for="SortCriteria">Zoradiť podľa</label>
@@ -24,7 +24,7 @@
             <input asp-for="InStock" class="form-control">
         </div>
         <div class="col mt-3">
-            <input type="submit" name="" value="Filtrovať" id="" class="btn btn-primary form-control">
+            <input type="submit" name="filter" value="Filtrovať" id="filter" class="btn btn-primary form-control">
         </div>
     </div>
 </form>
@@ -34,7 +34,7 @@
     <div class="row">
         @foreach (var p in Model.Products)
         {
-            <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6">
+            <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6" >
                 @{
                     if (this.Context.User.IsInRole("Admin"))
                     {
@@ -49,7 +49,6 @@
         }
     </div>
 </div>
-
 
 <div class="container">
     <div class="row">
