@@ -25,8 +25,7 @@ namespace E_Shop.Classes
             for (int i = 0; i < value; i++)
             {
                 var builder = new TagBuilder("span");
-                builder.AddCssClass("fa fa-star");
-                builder.Attributes.Add("style", "color:#ffc94b;");
+                builder.AddCssClass("fa fa-star text-warning");                
                 output.Content.AppendHtml(builder);
             }
             for (int i = 0; i < 5 - value; i++)

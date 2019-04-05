@@ -68,9 +68,11 @@ namespace E_Shop
             services.AddScoped<ICategoryRepository, CategoryRepository>();           
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
 
             services.AddScoped<ICategoryManager, CategoryManager>();           
             services.AddScoped<IProductManager, ProductManager>();
+            services.AddScoped<IReviewManager, ReviewManager>();
             
             services.AddMvc()
             .AddRazorPagesOptions(options =>

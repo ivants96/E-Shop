@@ -1,7 +1,6 @@
 ﻿@model E_Shop.Data.Models.Product
 @using E_Shop.Extensions
 <link href="~/css/ProdudctThumbnail.css" rel="stylesheet" />
-
 <div class="text-center">
     @if (Model.DiscountPercent > 0)
     {
@@ -18,6 +17,7 @@
             <a asp-controller="Product" asp-action="Detail" asp-route-url="@Model.Url" class="text-primary productTitle">@Model.Title</a>
         </h6>
     </div>
+    <span>Hodnotení (@Model.Reviews.Count)</span>
     <rating value="@Model.Rating" class="mb-2"></rating>
     @{
         if (Model.Stock > 0)

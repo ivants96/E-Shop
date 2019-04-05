@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace E_Shop.Data.Models
@@ -13,6 +14,7 @@ namespace E_Shop.Data.Models
             ImagesCount = 0;
             Hidden = false;
             CategoryProducts = new List<CategoryProduct>();
+            Reviews = new List<Review>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
@@ -62,11 +64,14 @@ namespace E_Shop.Data.Models
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 
         [NotMapped]
-        public int Rating => 3;
+        public double Rating => Reviews.Count == 0 ? 0 : Reviews.Average(r => r.Rating);
 
         [NotMapped]
         public int DiscountPercent => OldPrice.HasValue && OldPrice.Value > Price ? (int)Math.Round((OldPrice.Value - Price) / OldPrice.Value * 100) : 0;
 
+        public virtual ICollection<Review> Reviews { get; set; }
+
+         
 
     }
 }

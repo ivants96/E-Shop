@@ -14,6 +14,7 @@ namespace E_Shop.Data
         DbSet<Product> Products { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<CategoryProduct> CategoryProducts { get; set; }
+        DbSet<Review> Reviews { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)

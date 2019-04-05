@@ -52,7 +52,7 @@
         }
         <p>
             <rating value="@Model.Product.Rating"></rating>
-            0&nbsp;recenzí
+            <a href="#reviews" class="text-primary">Hodnotení (@Model.Product.Reviews.Count)</a>
         </p>
         <h4>
             @{
@@ -97,17 +97,63 @@
                 </div>
             </form>
         </div>
-        <div class="mt-2">
-            <form asp-action="ProcessStockForm" asp-controller="Product" method="post">
-                <div class="input-group">
-                    <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
-                    <input type="text" class="form-control input-quantity" name="quantity" value="1" />
-                    <button type="submit" name="add_to_stock" class="btn btn-success"><span class="fa fa-plus" aria-hidden="true"></span></button>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="mt-2">
+                <form asp-action="ProcessStockForm" asp-controller="Product" method="post">
+                    <div class="input-group">
+                        <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                        <input type="text" class="form-control input-quantity" name="quantity" value="1" />
+                        <button type="submit" name="add_to_stock" class="btn btn-success"><span class="fa fa-plus" aria-hidden="true"></span></button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+
+    @if (this.Context.User.Identity.IsAuthenticated)
+    {
+        <div>
+            <form asp-controller="Review" asp-action="AddReview" method="post">
+                <input name="Rating" id="rating" value="" type="hidden" />
+                <input name="ProductId" id="ProductId" value="@Model.Product.ProductId" type="hidden" />
+                <p class="text-center">
+                    @{
+                        for (int i = 0; i < 5; i++)
+                        {
+                            <span class="fa fa-star-o reviewStar"></span>
+                        }
+                    }
+                </p>
+                <div class="form-group">
+                    <label for="Content">Zakúpili ste si produkt? Napíšte ako ste spokojní.</label>
+                    <textarea class="form-control" name="Content" id="content" required="required" rows="5"></textarea>
+                </div>
+                <div class="text-center">
+                    <input class="btn btn-info form-control" name="send" id="send" value="Odoslať hodnotenie" type="submit" />
                 </div>
             </form>
         </div>
-    </div>
+    }
 </div>
+
+<div id="reviews" class="mt-5 bg-light">
+    @{
+        foreach (var review in Model.Product.Reviews)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <rating value="@review.Rating"></rating>
+                    <h6 class="text-primary">@review.User.UserName.Split("@").First()</h6>
+                    <span class="float-right">@review.Sent</span>
+                    <p>@review.Content</p>
+                </div>
+            </div>
+        }
+    }
+</div>
+
 @section Scripts{
     <script src="~/js/confirm.js"></script>
+    <script src="~/js/reviewForm.js"></script>
 }
