@@ -64,7 +64,7 @@ namespace E_Shop.Data.Models
         public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 
         [NotMapped]
-        public double Rating => Reviews.Count == 0 ? 0 : Reviews.Average(r => r.Rating);
+        public double Rating => Reviews.Count == 0 ? 0 : Math.Ceiling(Reviews.Average(r => r.Rating));
 
         [NotMapped]
         public int DiscountPercent => OldPrice.HasValue && OldPrice.Value > Price ? (int)Math.Round((OldPrice.Value - Price) / OldPrice.Value * 100) : 0;

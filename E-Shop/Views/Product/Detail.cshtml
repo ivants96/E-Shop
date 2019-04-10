@@ -52,7 +52,7 @@
         }
         <p>
             <rating value="@Model.Product.Rating"></rating>
-            <a href="#reviews" class="text-primary">Hodnotení (@Model.Product.Reviews.Count)</a>
+            <a href="#reviews" class="text-primary">Hodnotenia (@Model.Product.Reviews.Count)</a>
         </p>
         <h4>
             @{
@@ -113,20 +113,21 @@
 
     @if (this.Context.User.Identity.IsAuthenticated)
     {
-        <div>
+        <div class="mt-5">
             <form asp-controller="Review" asp-action="AddReview" method="post">
                 <input name="Rating" id="rating" value="" type="hidden" />
                 <input name="ProductId" id="ProductId" value="@Model.Product.ProductId" type="hidden" />
-                <p class="text-center">
-                    @{
-                        for (int i = 0; i < 5; i++)
-                        {
-                            <span class="fa fa-star-o reviewStar"></span>
-                        }
-                    }
-                </p>
                 <div class="form-group">
-                    <label for="Content">Zakúpili ste si produkt? Napíšte ako ste spokojní.</label>
+                    <label for="Content">Zakúpili ste si produkt? Ohodnoťte produkt a napíšte ako ste spokojní.</label>
+                    
+                    <p class="text-center">                        
+                        @{
+                            for (int i = 0; i < 5; i++)
+                            {
+                                <span class="fa fa-star-o reviewStar"></span>
+                            }
+                        }
+                    </p>
                     <textarea class="form-control" name="Content" id="content" required="required" rows="5"></textarea>
                 </div>
                 <div class="text-center">

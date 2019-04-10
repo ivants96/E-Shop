@@ -10,7 +10,6 @@ namespace E_Shop.Data.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int ReviewId { get; set; }
-        [StringLength(5000, MinimumLength = 5, ErrorMessage = "Minimálna dĺžka recenzie musí byť 5 znakov")]
         public string Content { get; set; }
         public string UserId { get; set; }
         public int ProductId { get; set; }

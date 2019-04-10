@@ -15,6 +15,10 @@ namespace E_Shop.Data
         DbSet<Category> Categories { get; set; }
         DbSet<CategoryProduct> CategoryProducts { get; set; }
         DbSet<Review> Reviews { get; set; }
+        DbSet<Address> Addresses { get; set; }
+        DbSet<BankAccount> BankAccounts { get; set; }
+        DbSet<PersonDetail> PersonDetails { get; set; }
+        DbSet<Person> People { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -23,7 +27,13 @@ namespace E_Shop.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);                       
+            base.OnModelCreating(builder);
+
+            builder.Entity<Person>().HasKey(p => p.PersonId);
+            builder.Entity<Person>()
+                .HasOne(p => p.User)
+                .WithOne(u => u.Person)
+                .IsRequired(false);
             
             builder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(10,1)");
             builder.Entity<Product>().Property(x => x.OldPrice).HasColumnType("decimal(10,1)");
