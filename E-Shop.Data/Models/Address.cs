@@ -25,7 +25,7 @@ namespace E_Shop.Data.Models
         [Required(ErrorMessage = "Vyplňte PSČ")]
         [StringLength(30, ErrorMessage = "PSČ je príliš dlhé")]
         [Display(Name = "PSČ")]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "Vyberte krajinu")]
         public Country Country { get; set; }

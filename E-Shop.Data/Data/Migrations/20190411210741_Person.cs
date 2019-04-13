@@ -25,7 +25,7 @@ namespace E_Shop.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     StreetNameAndHouseNumber = table.Column<string>(maxLength: 50, nullable: false),
                     City = table.Column<string>(maxLength: 100, nullable: false),
-                    PostalCode = table.Column<int>(maxLength: 30, nullable: false),
+                    PostalCode = table.Column<string>(maxLength: 30, nullable: false),
                     Country = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -119,12 +119,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "75122d72-5558-4ad5-9ace-d955d6256bf5", "b79b6872-0e4b-4007-b0cb-10ae07885b75", "User", null });
+                values: new object[] { "1553da99-20a1-4d84-91cd-9c2e3cb39eed", "eac0e213-369d-44d1-ab0b-5542449e5994", "User", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f25ea566-ebda-4259-94e3-a833bb6adf42", "9cce510d-709a-427f-8da1-e9fb02620193", "Admin", null });
+                values: new object[] { "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", "16283b50-8089-4c14-ae70-cb6d992e5daa", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_AddressId",
@@ -171,12 +171,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "75122d72-5558-4ad5-9ace-d955d6256bf5", "b79b6872-0e4b-4007-b0cb-10ae07885b75" });
+                keyValues: new object[] { "1553da99-20a1-4d84-91cd-9c2e3cb39eed", "eac0e213-369d-44d1-ab0b-5542449e5994" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "f25ea566-ebda-4259-94e3-a833bb6adf42", "9cce510d-709a-427f-8da1-e9fb02620193" });
+                keyValues: new object[] { "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", "16283b50-8089-4c14-ae70-cb6d992e5daa" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",

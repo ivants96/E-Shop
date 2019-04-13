@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Shop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190410200241_Person")]
+    [Migration("20190411210741_Person")]
     partial class Person
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,8 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<int>("Country");
 
-                    b.Property<int>("PostalCode")
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasMaxLength(30);
 
                     b.Property<string>("StreetNameAndHouseNumber")
@@ -326,8 +327,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "75122d72-5558-4ad5-9ace-d955d6256bf5", ConcurrencyStamp = "b79b6872-0e4b-4007-b0cb-10ae07885b75", Name = "User" },
-                        new { Id = "f25ea566-ebda-4259-94e3-a833bb6adf42", ConcurrencyStamp = "9cce510d-709a-427f-8da1-e9fb02620193", Name = "Admin" }
+                        new { Id = "1553da99-20a1-4d84-91cd-9c2e3cb39eed", ConcurrencyStamp = "eac0e213-369d-44d1-ab0b-5542449e5994", Name = "User" },
+                        new { Id = "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", ConcurrencyStamp = "16283b50-8089-4c14-ae70-cb6d992e5daa", Name = "Admin" }
                     );
                 });
 
