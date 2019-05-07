@@ -69,6 +69,10 @@ namespace E_Shop
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IPersonDetailRepository, PersonDetailRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
             services.AddScoped<ICategoryManager, CategoryManager>();           
             services.AddScoped<IProductManager, ProductManager>();
