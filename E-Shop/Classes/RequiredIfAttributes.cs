@@ -9,14 +9,14 @@ namespace E_Shop.Classes
     public abstract class RequiredIfAttribute : ValidationAttribute
     {
         protected string valueToCompare;
-        
+
 
         protected abstract string CustomErrorMessage { get; set; }
 
         public RequiredIfAttribute(string valueName)
         {
             this.valueToCompare = valueName;
-        }        
+        }
 
         protected T GetField<T>(ValidationContext validationContext)
         {
@@ -24,7 +24,7 @@ namespace E_Shop.Classes
             var objectType = validationContext.ObjectInstance.GetType();
             var fieldToCompare = objectType.GetProperty(valueToCompare);
 
-            if(fieldToCompare == null)
+            if (fieldToCompare == null)
             {
                 throw new MissingFieldException($"Nepodarilo sa získať hodnotu {fieldToCompare} na objekte {objectType.FullName}");
             }
@@ -44,21 +44,22 @@ namespace E_Shop.Classes
 
         protected override string CustomErrorMessage { get; set; } = "Údaj {0} je vyžadován, pokud není potvrzen údaj {1}";
 
-        public RequiredIfFalseAttribute(string valueName ) : base(valueName) { }
+        public RequiredIfFalseAttribute(string valueName) : base(valueName) { }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             // gets the value of specified property. We get the property from constructor
             var fieldValue = GetField<bool>(validationContext);
 
-            if (fieldValue == true || !string.IsNullOrEmpty(value.ToString()))
+            if (fieldValue == true || value != null && value.ToString() != string.Empty)
             {
                 return ValidationResult.Success;
             }
             else
             {
-               return BuildErrorMessage(validationContext);
+                return BuildErrorMessage(validationContext);
             }
+           
         }
     }
 
@@ -94,17 +95,24 @@ namespace E_Shop.Classes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            // for example if firstName is not empty you have to enter lastName too
-            if (string.IsNullOrEmpty(value.ToString()) && !string.IsNullOrEmpty(GetField<string>(validationContext)))
-            {
-                return BuildErrorMessage(validationContext);
-            }
-            else
+            string fieldval = GetField<string>(validationContext);
+            string stringval = ((string)value);
+
+            bool arenotnull = fieldval != null && stringval != null;
+            bool arebothempty = fieldval == stringval && stringval == string.Empty;
+            bool arebothfilled = fieldval?.Length > 0 && stringval?.Length > 0;
+
+            if (arenotnull &&
+                arebothempty || arebothfilled)
             {
                 return ValidationResult.Success;
             }
+
+            string defaultErrorMessage = $"Pokud je zadán údaj {valueToCompare}, je vyžadován i údaj {validationContext.DisplayName}";
+            return new ValidationResult(ErrorMessage?.Length == 0 ? defaultErrorMessage : ErrorMessage);    
+
         }
     }
-    
+
 
 }

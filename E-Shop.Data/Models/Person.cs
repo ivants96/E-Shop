@@ -12,7 +12,7 @@ namespace E_Shop.Data.Models
         public int PersonId { get; set; }
 
         [ForeignKey("User")]
-        public string UseId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("DeliveryAddress")]
         public int DeliveryAddressId { get; set; }

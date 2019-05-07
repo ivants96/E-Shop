@@ -16,7 +16,7 @@ namespace E_Shop.Models.PersonViewModels
             {
                 DeliveryAddressIsAddress = false;
                 StreetHouseNumberDelivery = person.DeliveryAddress.StreetNameAndHouseNumber;
-                CountryDelivery = person.DeliveryAddress.Country;
+                CityDelivery = person.DeliveryAddress.City;
                 PostalCodeDelivery = person.DeliveryAddress.PostalCode;
                 CountryDelivery = person.DeliveryAddress.Country;
             }
@@ -25,11 +25,7 @@ namespace E_Shop.Models.PersonViewModels
                 DeliveryAddressIsAddress = true;
             }
         }
-
-        [Required(ErrorMessage = "Email je povinný")]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+              
 
         [RequiredIfEmpty("CompanyName", ErrorMessage = "Vyplňte meno")]
         [Display(Name = "Meno")]
@@ -83,10 +79,12 @@ namespace E_Shop.Models.PersonViewModels
         public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "Vyberte krajinu")]
+        [Display(Name = "Štát")]
         public Country Country { get; set; }
 
         //Delivery Addresss
 
+        [Display(Name = "Faktúračná adresa sa zhoduje s adresou doručenia")]
         public bool DeliveryAddressIsAddress { get; set; }
 
         [RequiredIfFalse("DeliveryAddressIsAddress", ErrorMessage = "Vyplňte názov ulice a číslo domu")]
@@ -105,6 +103,7 @@ namespace E_Shop.Models.PersonViewModels
         public string PostalCodeDelivery { get; set; }
 
         [RequiredIfFalse("DeliveryAddressIsAddress", ErrorMessage = "Vyberte krajinu")]
+        [Display(Name = "Štát")]
         public Country CountryDelivery { get; set; }
         
     }

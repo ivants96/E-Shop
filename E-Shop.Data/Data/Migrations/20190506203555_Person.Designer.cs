@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Shop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190411210741_Person")]
+    [Migration("20190506203555_Person")]
     partial class Person
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,7 +180,7 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<int>("PersonDetailId");
 
-                    b.Property<string>("UseId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("PersonId");
 
@@ -192,9 +192,9 @@ namespace E_Shop.Data.Migrations
 
                     b.HasIndex("PersonDetailId");
 
-                    b.HasIndex("UseId")
+                    b.HasIndex("UserId")
                         .IsUnique()
-                        .HasFilter("[UseId] IS NOT NULL");
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("People");
                 });
@@ -327,8 +327,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "1553da99-20a1-4d84-91cd-9c2e3cb39eed", ConcurrencyStamp = "eac0e213-369d-44d1-ab0b-5542449e5994", Name = "User" },
-                        new { Id = "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", ConcurrencyStamp = "16283b50-8089-4c14-ae70-cb6d992e5daa", Name = "Admin" }
+                        new { Id = "87fefa13-4785-4444-946c-4010fedb2e06", ConcurrencyStamp = "f775d1ce-2035-4a58-89b0-e73e3aae340d", Name = "User" },
+                        new { Id = "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", ConcurrencyStamp = "03b4908c-52cb-45a4-944a-2b18b746b292", Name = "Admin" }
                     );
                 });
 
@@ -461,7 +461,7 @@ namespace E_Shop.Data.Migrations
 
                     b.HasOne("E_Shop.Data.Models.ApplicationUser", "User")
                         .WithOne("Person")
-                        .HasForeignKey("E_Shop.Data.Models.Person", "UseId");
+                        .HasForeignKey("E_Shop.Data.Models.Person", "UserId");
                 });
 
             modelBuilder.Entity("E_Shop.Data.Models.Review", b =>

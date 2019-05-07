@@ -75,7 +75,7 @@ namespace E_Shop.Data.Migrations
                 {
                     PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UseId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     DeliveryAddressId = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
                     PersonDetailId = table.Column<int>(nullable: false),
@@ -109,8 +109,8 @@ namespace E_Shop.Data.Migrations
                         principalColumn: "PersonDetailId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_People_AspNetUsers_UseId",
-                        column: x => x.UseId,
+                        name: "FK_People_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -119,12 +119,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1553da99-20a1-4d84-91cd-9c2e3cb39eed", "eac0e213-369d-44d1-ab0b-5542449e5994", "User", null });
+                values: new object[] { "87fefa13-4785-4444-946c-4010fedb2e06", "f775d1ce-2035-4a58-89b0-e73e3aae340d", "User", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", "16283b50-8089-4c14-ae70-cb6d992e5daa", "Admin", null });
+                values: new object[] { "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", "03b4908c-52cb-45a4-944a-2b18b746b292", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_AddressId",
@@ -147,11 +147,11 @@ namespace E_Shop.Data.Migrations
                 column: "PersonDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_People_UseId",
+                name: "IX_People_UserId",
                 table: "People",
-                column: "UseId",
+                column: "UserId",
                 unique: true,
-                filter: "[UseId] IS NOT NULL");
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -171,12 +171,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "1553da99-20a1-4d84-91cd-9c2e3cb39eed", "eac0e213-369d-44d1-ab0b-5542449e5994" });
+                keyValues: new object[] { "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", "03b4908c-52cb-45a4-944a-2b18b746b292" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "e17a9fe5-1e37-4824-bf33-ca5a693b0e59", "16283b50-8089-4c14-ae70-cb6d992e5daa" });
+                keyValues: new object[] { "87fefa13-4785-4444-946c-4010fedb2e06", "f775d1ce-2035-4a58-89b0-e73e3aae340d" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
