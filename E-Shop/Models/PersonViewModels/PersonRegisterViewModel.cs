@@ -1,31 +1,38 @@
-﻿using E_Shop.Classes;
-using E_Shop.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Shop.Classes;
+using E_Shop.Data.Models;
 
 namespace E_Shop.Models.PersonViewModels
 {
-    public class BasePersonViewModel
+    public class PersonRegisterViewModel
     {
-        public BasePersonViewModel(Person person)
+
+        public PersonRegisterViewModel()
         {
-            if (person.AddressId != person.DeliveryAddressId)
-            {
-                DeliveryAddressIsAddress = false;
-                StreetHouseNumberDelivery = person.DeliveryAddress.StreetNameAndHouseNumber;
-                CityDelivery = person.DeliveryAddress.City;
-                PostalCodeDelivery = person.DeliveryAddress.PostalCode;
-                CountryDelivery = person.DeliveryAddress.Country;
-            }
-            else
-            {
-                DeliveryAddressIsAddress = true;
-            }
+
         }
-              
+
+        [Required(ErrorMessage = "Heslo je povinné")]
+        [StringLength(100, ErrorMessage = "{0} musí obsahovať aspoň {2} a najviac {1} znakov", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Heslo")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Potvrďte heslo")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Potvrdenie hesla")]
+        [Compare("Password", ErrorMessage = "Zadaná heslá sa nezhodujú")]
+        public string ConfirmPassword { get; set; }
+
+
+        [Required(ErrorMessage = "Email je povinný")]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [RequiredIfEmpty("CompanyName", ErrorMessage = "Vyplňte meno")]
         [Display(Name = "Meno")]
@@ -37,12 +44,12 @@ namespace E_Shop.Models.PersonViewModels
         [Display(Name = "Priezvisko")]
         public string LastName { get; set; }
 
-        [RequiredIfEmpty("FirstName", ErrorMessage = "Vyplňte názov spoločnosťi")]
+        [RequiredIfEmpty("FirstName", ErrorMessage = "Vyplňte názov spoločnosti")]
         [StringLength(100, ErrorMessage = "Spoločnosť môže obsahovať maximálne 100 znakov")]
         [Display(Name = "Spoločnosť")]
         public string CompanyName { get; set; }
 
-        [RequiredIfNotEmpty("CompanyName", ErrorMessage = "Vyplňte fax")]
+
         [StringLength(20, ErrorMessage = "Fax je prílš dlhý")]
         [Display(Name = "Fax")]
         public string Fax { get; set; }
@@ -84,7 +91,7 @@ namespace E_Shop.Models.PersonViewModels
 
         //Delivery Addresss
 
-        [Display(Name = "Faktúračná adresa sa zhoduje s adresou doručenia")]
+        [Display(Name = "Zaškrtnite, ak je dodacia adresa rovnaká ako fakturačná")]
         public bool DeliveryAddressIsAddress { get; set; }
 
         [RequiredIfFalse("DeliveryAddressIsAddress", ErrorMessage = "Vyplňte názov ulice a číslo domu")]
@@ -105,6 +112,7 @@ namespace E_Shop.Models.PersonViewModels
         [RequiredIfFalse("DeliveryAddressIsAddress", ErrorMessage = "Vyberte krajinu")]
         [Display(Name = "Štát")]
         public Country CountryDelivery { get; set; }
-        
+
+
     }
 }

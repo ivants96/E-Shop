@@ -15,8 +15,7 @@ namespace E_Shop.Data
         DbSet<Category> Categories { get; set; }
         DbSet<CategoryProduct> CategoryProducts { get; set; }
         DbSet<Review> Reviews { get; set; }
-        DbSet<Address> Addresses { get; set; }
-        DbSet<BankAccount> BankAccounts { get; set; }
+        DbSet<Address> Addresses { get; set; }        
         DbSet<PersonDetail> PersonDetails { get; set; }
         DbSet<Person> People { get; set; }
 

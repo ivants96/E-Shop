@@ -95,26 +95,6 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("E_Shop.Data.Models.BankAccount", b =>
-                {
-                    b.Property<int>("BankAccoutID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountOwner")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Iban")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Swift")
-                        .HasMaxLength(30);
-
-                    b.HasKey("BankAccoutID");
-
-                    b.ToTable("BankAccounts");
-                });
-
             modelBuilder.Entity("E_Shop.Data.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -172,8 +152,6 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<int>("AddressId");
 
-                    b.Property<int?>("BankAccountId");
-
                     b.Property<int>("DeliveryAddressId");
 
                     b.Property<int>("PersonDetailId");
@@ -183,8 +161,6 @@ namespace E_Shop.Data.Migrations
                     b.HasKey("PersonId");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("BankAccountId");
 
                     b.HasIndex("DeliveryAddressId");
 
@@ -325,8 +301,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "87fefa13-4785-4444-946c-4010fedb2e06", ConcurrencyStamp = "f775d1ce-2035-4a58-89b0-e73e3aae340d", Name = "User" },
-                        new { Id = "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", ConcurrencyStamp = "03b4908c-52cb-45a4-944a-2b18b746b292", Name = "Admin" }
+                        new { Id = "c35bf819-ec2b-4cff-a18a-e48c730b17bc", ConcurrencyStamp = "15089998-db18-43ff-a309-69cd713b19ed", Name = "User" },
+                        new { Id = "7545a300-5a36-4ffe-b441-3a9cb0114bb1", ConcurrencyStamp = "d88d42d9-8e6b-4d4b-aaea-207c56ae0935", Name = "Admin" }
                     );
                 });
 
@@ -442,10 +418,6 @@ namespace E_Shop.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("E_Shop.Data.Models.BankAccount", "BankAccount")
-                        .WithMany()
-                        .HasForeignKey("BankAccountId");
 
                     b.HasOne("E_Shop.Data.Models.Address", "DeliveryAddress")
                         .WithMany()

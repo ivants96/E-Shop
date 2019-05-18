@@ -56,7 +56,10 @@
             <!-- End of row -->
             <div class="row">
                 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-                    <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#infoNavbar" aria-controls="infoNavbar" aria-expanded="false" aria-label="Info navigation">
+                        <span class="text-warning">Menu &nbsp;<i class="fa fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="infoNavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">O nás<span class="sr-only">(current)</span></a>
@@ -140,9 +143,7 @@
                 integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-    <script src="~/js/showOrHide.js"></script>
+    </environment>    
     @RenderSection("Scripts", required: false)
-
 </body>
 </html>

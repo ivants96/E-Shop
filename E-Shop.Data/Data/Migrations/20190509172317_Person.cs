@@ -34,21 +34,6 @@ namespace E_Shop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BankAccounts",
-                columns: table => new
-                {
-                    BankAccoutID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Swift = table.Column<string>(maxLength: 30, nullable: true),
-                    Iban = table.Column<string>(maxLength: 30, nullable: true),
-                    AccountOwner = table.Column<string>(maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankAccounts", x => x.BankAccoutID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersonDetails",
                 columns: table => new
                 {
@@ -78,8 +63,7 @@ namespace E_Shop.Data.Migrations
                     UserId = table.Column<string>(nullable: true),
                     DeliveryAddressId = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
-                    PersonDetailId = table.Column<int>(nullable: false),
-                    BankAccountId = table.Column<int>(nullable: true)
+                    PersonDetailId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,12 +73,6 @@ namespace E_Shop.Data.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_People_BankAccounts_BankAccountId",
-                        column: x => x.BankAccountId,
-                        principalTable: "BankAccounts",
-                        principalColumn: "BankAccoutID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_People_Addresses_DeliveryAddressId",
@@ -119,22 +97,17 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "87fefa13-4785-4444-946c-4010fedb2e06", "f775d1ce-2035-4a58-89b0-e73e3aae340d", "User", null });
+                values: new object[] { "c35bf819-ec2b-4cff-a18a-e48c730b17bc", "15089998-db18-43ff-a309-69cd713b19ed", "User", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", "03b4908c-52cb-45a4-944a-2b18b746b292", "Admin", null });
+                values: new object[] { "7545a300-5a36-4ffe-b441-3a9cb0114bb1", "d88d42d9-8e6b-4d4b-aaea-207c56ae0935", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_AddressId",
                 table: "People",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_BankAccountId",
-                table: "People",
-                column: "BankAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_DeliveryAddressId",
@@ -163,20 +136,17 @@ namespace E_Shop.Data.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "BankAccounts");
-
-            migrationBuilder.DropTable(
                 name: "PersonDetails");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "1cc9f7ba-c730-4568-84a2-eef4808b3b7c", "03b4908c-52cb-45a4-944a-2b18b746b292" });
+                keyValues: new object[] { "7545a300-5a36-4ffe-b441-3a9cb0114bb1", "d88d42d9-8e6b-4d4b-aaea-207c56ae0935" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "87fefa13-4785-4444-946c-4010fedb2e06", "f775d1ce-2035-4a58-89b0-e73e3aae340d" });
+                keyValues: new object[] { "c35bf819-ec2b-4cff-a18a-e48c730b17bc", "15089998-db18-43ff-a309-69cd713b19ed" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",

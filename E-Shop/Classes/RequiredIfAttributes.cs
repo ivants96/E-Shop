@@ -59,7 +59,7 @@ namespace E_Shop.Classes
             {
                 return BuildErrorMessage(validationContext);
             }
-           
+
         }
     }
 
@@ -98,18 +98,17 @@ namespace E_Shop.Classes
             string fieldval = GetField<string>(validationContext);
             string stringval = ((string)value);
 
-            bool arenotnull = fieldval != null && stringval != null;
-            bool arebothempty = fieldval == stringval && stringval == string.Empty;
-            bool arebothfilled = fieldval?.Length > 0 && stringval?.Length > 0;
-
-            if (arenotnull &&
-                arebothempty || arebothfilled)
+            if (string.IsNullOrEmpty(stringval) && !string.IsNullOrEmpty(fieldval))
+            {
+                string defaultErrorMessage = $"Pokud je zadán údaj {valueToCompare}, je vyžadován i údaj {validationContext.DisplayName}";
+                return new ValidationResult(ErrorMessage?.Length == 0 ? defaultErrorMessage : ErrorMessage);
+            }
+            else
             {
                 return ValidationResult.Success;
             }
 
-            string defaultErrorMessage = $"Pokud je zadán údaj {valueToCompare}, je vyžadován i údaj {validationContext.DisplayName}";
-            return new ValidationResult(ErrorMessage?.Length == 0 ? defaultErrorMessage : ErrorMessage);    
+
 
         }
     }

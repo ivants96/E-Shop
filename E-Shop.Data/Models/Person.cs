@@ -22,15 +22,11 @@ namespace E_Shop.Data.Models
 
         public int PersonDetailId { get; set; }
 
-        public int? BankAccountId { get; set; }
-
         public virtual Address Address { get; set; }
 
         public virtual Address DeliveryAddress { get; set; }
 
         public virtual PersonDetail PersonDetail { get; set; }
-
-        public virtual BankAccount BankAccount { get; set; }
 
         public virtual ApplicationUser User { get; set; }
     }

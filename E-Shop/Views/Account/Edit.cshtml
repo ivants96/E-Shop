@@ -1,0 +1,101 @@
+﻿@model PersonEditViewModel
+@{
+    ViewData["Title"] = "Upraviť údaje";
+}
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="text-primary mt-2">@ViewData["Title"]</h3>
+        <form asp-action="Edit" method="post">
+            <hr />
+            <h3>Základné údaje</h3>
+            <div class="form-group">
+                <label asp-for="@Model.FirstName"></label>
+                <input asp-for="@Model.FirstName" class="form-control" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.LastName"></label>
+                <input asp-for="@Model.LastName" class="form-control" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label>
+                <input asp-for="@Model.Email" class="form-control" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+            <h3>Údaje firmy</h3>
+            <div class="form-group">
+                <label asp-for="@Model.CompanyName"></label>
+                <input asp-for="@Model.CompanyName" class="form-control" />
+                <span asp-validation-for="@Model.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.IČO"></label>
+                <input asp-for="@Model.IČO" class="form-control" />
+                <span asp-validation-for="@Model.IČO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.DIČ"></label>
+                <input asp-for="@Model.DIČ" class="form-control" />
+                <span asp-validation-for="@Model.DIČ" class="text-danger"></span>
+            </div>
+            <h3>Kontaktné údaje</h3>
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber"></label>
+                <input asp-for="@Model.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Fax"></label>
+                <input asp-for="@Model.Fax" class="form-control" />
+                <span asp-validation-for="@Model.Fax" class="text-danger"></span>
+            </div>
+            <h3>Fakturačná adresa</h3>
+            <div class="form-group">
+                <label asp-for="@Model.StreetNameAndHouseNumber"></label>
+                <input asp-for="@Model.StreetNameAndHouseNumber" class="form-control" />
+                <span asp-validation-for="@Model.StreetNameAndHouseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.City"></label>
+                <input asp-for="@Model.City" class="form-control" />
+                <span asp-validation-for="@Model.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PostalCode"></label>
+                <input asp-for="@Model.PostalCode" class="form-control" />
+                <span asp-validation-for="@Model.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Country"></label>
+                <select asp-for="@Model.Country" asp-items="@Html.GetEnumSelectList<E_Shop.Data.Models.Country>()"></select>
+                <span asp-validation-for="@Model.Country" class="text-danger"></span>
+            </div>
+            <h3>Dodacia adresa</h3>
+            <div class="form-group">
+                <label asp-for="@Model.StreetHouseNumberDelivery"></label>
+                <input asp-for="@Model.StreetHouseNumberDelivery" class="form-control" />
+                <span asp-validation-for="@Model.StreetHouseNumberDelivery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.CityDelivery"></label>
+                <input asp-for="@Model.CityDelivery" class="form-control" />
+                <span asp-validation-for="@Model.CityDelivery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PostalCodeDelivery"></label>
+                <input asp-for="@Model.PostalCodeDelivery" class="form-control" />
+                <span asp-validation-for="@Model.PostalCodeDelivery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.CountryDelivery"></label>
+                <select asp-for="@Model.CountryDelivery" asp-items="@Html.GetEnumSelectList<E_Shop.Data.Models.Country>()"></select>
+                <span asp-validation-for="@Model.CountryDelivery" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Uložiť</button>
+        </form>
+    </div>
+</div>
+
+
+

@@ -21,6 +21,7 @@ using E_Shop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using E_Shop.Classes;
+using AutoMapper;
 
 namespace E_Shop
 {
@@ -72,11 +73,12 @@ namespace E_Shop
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonDetailRepository, PersonDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
-            services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+            
 
             services.AddScoped<ICategoryManager, CategoryManager>();           
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IReviewManager, ReviewManager>();
+            services.AddScoped<IPersonManager, PersonManager>();
             
             services.AddMvc()
             .AddRazorPagesOptions(options =>
@@ -85,7 +87,7 @@ namespace E_Shop
                   options.Conventions.AuthorizePage("/ChangePassword");
                   options.Conventions.AuthorizePage("/PassChangeConfirmation");
               });
-            
+            services.AddAutoMapper();
             //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDistributedMemoryCache();
             services.AddSession();

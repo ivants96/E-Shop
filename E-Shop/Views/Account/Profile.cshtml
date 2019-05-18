@@ -1,0 +1,124 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using E_Shop.Data.Models
+
+@model PersonEditViewModel
+@{
+    ViewData["Title"] = "Môj účet";
+}
+@inject UserManager<ApplicationUser> UserManager
+
+<partial name="_AccountMenu" />
+<h2 class="text-primary mt-1">Moje údaje</h2>
+@{ string accoutType = string.IsNullOrEmpty(Model.DIČ) ? "Fyzická osoba" : "Právnická osoba";}
+@{ string fullName = string.IsNullOrEmpty(Model.CompanyName) ? Model.FirstName + " " + Model.LastName : Model.CompanyName;}
+@{ var userMail = User.Identity.Name;}
+<div class="row">
+   
+    <div class="col-md-6 mt-5">
+        <div class="card w-100">
+            <div class="card-header">
+                <h5 class="font-italic">Základné Informácie</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h6>Účet</h6>
+                        <p>@fullName</p>
+                    </div>
+                    <div class="col">
+                        <h6>Typ účtu</h6>
+                        <p>@accoutType</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Kontaktné údaje</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold">Prihlasovací e-mail:</span>
+                    </div>
+                    <div class="col-auto">@userMail</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold">Kontaktný e-mail:</span>
+                    </div>
+                    <div class="col-auto">@Model.Email</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold">Telefón:</span>
+                    </div>
+                    <div class="col-auto">@Model.PhoneNumber</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mt-5">
+        <div class="card w-100">
+            <div class="card-header">
+                <h5 class="font-italic">Fakturačná adressa</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.CompanyName))
+                {
+                    <div class="row mb-1">
+                        <div class="col-6"><span class="font-weight-bold">Názov firmy</span></div>
+                        <div class="col-6">@Model.CompanyName</div>
+                    </div>
+                }
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Ulica a číslo domu</span></div>
+                    <div class="col-6">@Model.StreetNameAndHouseNumber</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Mesto</span></div>
+                    <div class="col-6">@Model.City</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">PSČ</span></div>
+                    <div class="col-6">@Model.PostalCode</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Śtát</span></div>
+                    <div class="col-6">@Model.Country</div>
+                </div>
+            </div>
+        </div>
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Dodacia adressa</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.CompanyName))
+                {
+                    <div class="row mb-1">
+                        <div class="col-6"><span class="font-weight-bold">Názov firmy</span></div>
+                        <div class="col-6">@Model.CompanyName</div>
+                    </div>
+                }
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Ulica a číslo domu</span></div>
+                    <div class="col-6">@Model.StreetHouseNumberDelivery</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Mesto</span></div>
+                    <div class="col-6">@Model.CityDelivery</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">PSČ</span></div>
+                    <div class="col-6">@Model.PostalCodeDelivery</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Śtát</span></div>
+                    <div class="col-6">@Model.CountryDelivery</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a asp-controller="Account" asp-action="Edit" class="btn btn-primary ml-3 mt-3">Upraviť</a>
+</div>

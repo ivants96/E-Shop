@@ -13,7 +13,7 @@ namespace E_Shop.Data.Repositories
 
         public Person FindByUserId(string id)
         {
-            return dbSet.Where(p => p.User.Id == id).SingleOrDefault();
+            return dbSet.Where(p => p.User.Id == id).Single();
         }
     }
 }
