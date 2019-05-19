@@ -15,12 +15,14 @@ namespace E_Shop.Data
         DbSet<Category> Categories { get; set; }
         DbSet<CategoryProduct> CategoryProducts { get; set; }
         DbSet<Review> Reviews { get; set; }
-        DbSet<Address> Addresses { get; set; }        
+        DbSet<Address> Addresses { get; set; }
         DbSet<PersonDetail> PersonDetails { get; set; }
         DbSet<Person> People { get; set; }
+        DbSet<EOrder> EOrders { get; set; }
+        DbSet<ProductEOrder> ProductEOrders { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-                : base(options)
+                        : base(options)
         {
         }
 
@@ -33,7 +35,7 @@ namespace E_Shop.Data
                 .HasOne(p => p.User)
                 .WithOne(u => u.Person)
                 .IsRequired(false);
-            
+
             builder.Entity<Product>().Property(x => x.Price).HasColumnType("decimal(10,1)");
             builder.Entity<Product>().Property(x => x.OldPrice).HasColumnType("decimal(10,1)");
 

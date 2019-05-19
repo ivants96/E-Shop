@@ -73,7 +73,9 @@ namespace E_Shop
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonDetailRepository, PersonDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
-            
+            services.AddScoped<IEOrderRepository, EOrderRepository>();
+            services.AddScoped<IProductEOrderRepository, ProductEOrderRepository>();
+
 
             services.AddScoped<ICategoryManager, CategoryManager>();           
             services.AddScoped<IProductManager, ProductManager>();
