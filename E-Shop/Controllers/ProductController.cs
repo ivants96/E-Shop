@@ -103,7 +103,7 @@ namespace E_Shop.Controllers
         }
 
         const int pageSize = 6;
-        
+
         public IActionResult Index(int? id, string searchPhrase, int? page, ProductIndexViewModel model)
         {
             //ToPagedList (1, pageSize) - return 1 of n pages, one page can contain number set in pageSize at most
@@ -112,7 +112,7 @@ namespace E_Shop.Controllers
             if (id.HasValue)
             {
                 searchPhrase = string.Empty;
-                model.Products = productManager.FindByCategoryId(id.Value).ToPagedList(1, pageSize); 
+                model.Products = productManager.FindByCategoryId(id.Value).ToPagedList(1, pageSize);
                 model.CurrentPhrase = string.Empty;
                 model.CurrentCategoryId = id;
             }
@@ -122,10 +122,6 @@ namespace E_Shop.Controllers
                 model.CurrentPhrase = searchPhrase;
                 model.CurrentCategoryId = null;
             }
-            //else if(searchPhrase == null)
-            //{
-            //    return RedirectToAction("ProductNotFound");
-            //}            
             else //filtering or sorting products or click on next page
             {
                 searchPhrase = model.CurrentPhrase;
@@ -149,7 +145,7 @@ namespace E_Shop.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
-        public IActionResult Detail (string url)
+        public IActionResult Detail(string url)
         {
             var model = new ProductDetailViewModel()
             {

@@ -7,5 +7,7 @@ namespace E_Shop.Data.Interfaces
 {
     public interface IEOrderRepository : IRepository<EOrder>
     {
+        EOrder FindOrderIdByTokenState(int id, string token, OrderState orderState);
+        
     }
 }

@@ -7,5 +7,8 @@ namespace E_Shop.Data.Interfaces
 {
     public interface IProductEOrderRepository : IRepository<ProductEOrder>
     {
+        ProductEOrder FindByOrderIdProductId(int orderId, int productId);
+        IEnumerable<ProductEOrder> FindByOrderId(int orderId);
+
     }
 }

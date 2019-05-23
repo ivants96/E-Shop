@@ -26,7 +26,7 @@ using AutoMapper;
 namespace E_Shop
 {
     public class Startup
-    {       
+    {
 
         public Startup(IConfiguration configuration)
         {
@@ -65,8 +65,8 @@ namespace E_Shop
               .AddDefaultTokenProviders();
 
             services.AddImageProcessing();
-                       
-            services.AddScoped<ICategoryRepository, CategoryRepository>();           
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
@@ -77,11 +77,12 @@ namespace E_Shop
             services.AddScoped<IProductEOrderRepository, ProductEOrderRepository>();
 
 
-            services.AddScoped<ICategoryManager, CategoryManager>();           
+            services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IReviewManager, ReviewManager>();
             services.AddScoped<IPersonManager, PersonManager>();
-            
+            services.AddScoped<IOrderManager, OrderManager>();
+
             services.AddMvc()
             .AddRazorPagesOptions(options =>
               {
@@ -112,7 +113,7 @@ namespace E_Shop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>

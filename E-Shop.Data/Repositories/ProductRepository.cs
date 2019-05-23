@@ -14,7 +14,7 @@ namespace E_Shop.Data.Repositories
         {
             return dbSet.SingleOrDefault(p => p.Url == url && !p.Hidden);
         }
-        //returns list of products which contain current search phrase in their title, description or ShortDescription
+        //returns list of products which contain current search phrase in their title, description 
         public List<Product> SearchProducts(string searchPhrase)
         {
             if (string.IsNullOrEmpty(searchPhrase))
