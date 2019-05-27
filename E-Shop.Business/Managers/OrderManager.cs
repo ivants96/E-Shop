@@ -61,13 +61,12 @@ namespace E_Shop.Business.Managers
             return order;
         }
 
-        public EOrder GetOrder(int? orderId, bool create = true)
+        public EOrder GetOrder(int? orderId = null, bool create = true)
         {
             if (orderId.HasValue)
             {
                 _eOrderRepository.FindById(orderId.Value);
             }
-
 
             int? attemptRetrieve = httpContext.Session.GetInt32("orderId");
             if (attemptRetrieve.HasValue)
@@ -110,7 +109,7 @@ namespace E_Shop.Business.Managers
             return !product.Hidden && product.CategoryProducts.Any(c => !c.Category.Hidden) && product.Stock > 0;
         }
 
-        public void AddProducts(int productId, int quantity, int? orderId, bool ignoreHiddenProducts = false)
+        public void AddProducts(int productId, int quantity, int? orderId = null, bool ignoreHiddenProducts = false)
         {
             // If orderId == null We're working with current Order
             var order = GetOrder(orderId);
@@ -137,7 +136,7 @@ namespace E_Shop.Business.Managers
             }
             else
             {
-                // Ak je produkt už v košíku zmeníme iba jeho miesto toho aby sme ho pridali znova
+                // If cart alredy contains product don't add it again just change quantity
                 item.Quantity += quantity;
                 _productEOrderRepository.Update(item);
             }
@@ -149,16 +148,74 @@ namespace E_Shop.Business.Managers
 
             if (order == null)
             {
-                return new OrderSummary() { Price = 0m, Quantity = 0 };
+                return new OrderSummary() { Price = 0, Quantity = 0 };
             }
-            var items = _productEOrderRepository.FindByOrderId(order.EOrderId);
+            var items = _productEOrderRepository.FindByOrderId(order.EOrderId).ToList();
             var result = new OrderSummary()
             {
                 Price = items.Sum(i => i.Quantity * i.Product.Price),
                 Quantity = items.Sum(i => i.Quantity)
-            };
+            };            
             return result;
         }
+
+        // Displays list of products in the cart
+        public List<OrderItemInfo> GetProduct (int? orderId = null)
+        {
+            var order = GetOrder(orderId);
+            if (order == null)
+            {
+                return new List<OrderItemInfo>();
+            }
+            return _productEOrderRepository.FindByOrderId(order.EOrderId)
+                .Select(x => new OrderItemInfo()
+                {
+                    ProductId = x.ProductId,
+                    Price = x.Product.Price,
+                    Quantity = x.Quantity,
+                    Url = x.Product.Url,
+                    Title = x.Product.Title                    
+                }).ToList();                
+        }
+
+        public void UpdateProductInOrder(int orderId, int productId, int quantity)
+        {
+            if (quantity < 0)
+            {
+                throw new Exception("Počet produktov nesmie byť záporný");
+            }
+
+            var item = _productEOrderRepository.FindByOrderIdProductId(orderId, productId);
+            if (quantity == 0)
+            {
+                _productEOrderRepository.Delete(item.ProductEOrderId);
+            }
+            else
+            {
+                item.Quantity = quantity;
+                _productEOrderRepository.Update(item);
+            }
+        }
+
+       
+
+        public void UpdateCart(IFormCollection  form)
+        {
+            var order = GetOrder();
+            foreach (var key in form.Keys)
+            {
+                if (!key.StartsWith("quantity_")) // input for quantity will have prefix _quantity@item.ProductId
+                {
+                    continue;
+                }
+                int productId = int.Parse(key.Remove(0, 9)); // remove prefix _quantity
+                form.TryGetValue(key, out var values); // Saves input value to variable values
+                int quantity = int.Parse(values.First()); // Gets value from input
+                UpdateProductInOrder(order.EOrderId, productId, quantity);
+            }
+        }
+
+
 
 
     }

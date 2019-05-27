@@ -13,7 +13,7 @@
             <a asp-controller="Account" asp-action="Profile" class="nav-link text-primary">Môj účet <i class="fa fa-user"></i></a>
         </li>
         <li class="list-inline-item">
-            <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
+            <a class="nav-link text-primary" href="#"><i class="fa fa-shopping-cart"></i>&nbsp;@string.Format("({0} €)", ViewData["CartItemsSum"])</a>
         </li>
         <li class="list-inline-item">
             <form asp-page="/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
@@ -33,7 +33,7 @@ else
             <a asp-page="/Register" class="nav-link text-success"><em>Registrovať sa&nbsp;<i class="fa fa-user-plus"></i></em></a>
         </li>
         <li class="list-inline-item">
-            <a class="nav-link text-primary" href="#">Košík&nbsp;<i class="fa fa-shopping-cart"></i></a>
+            <a class="nav-link text-primary" href="#"><i class="fa fa-shopping-cart"></i>&nbsp;@string.Format($"({ViewData["CartItemsSum"]} €)" )</a>
         </li>
     </ul>
 }

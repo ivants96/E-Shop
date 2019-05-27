@@ -1,13 +1,16 @@
 ﻿#socialIcons a i {
     color: white;
 }
+
 #sparkyLogo {
     width: auto;
     height: auto;
 }
+
 a:hover {
     cursor: pointer;
 }
+
 #loginModalHeader {
     background-color: #CAE4FA;
 }
@@ -36,3 +39,10 @@ a:hover {
     position: relative;
 }
 
+#orderStage {
+    table-layout: fixed;
+}
+
+#orderStage td {
+    vertical-align: middle !important;
+}

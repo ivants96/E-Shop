@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace E_Shop.Controllers
 {
     [Authorize]
+    [PassCartStateFilter]
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

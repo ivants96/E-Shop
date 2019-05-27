@@ -85,7 +85,33 @@ namespace E_Shop.Extensions
             return new HtmlContentBuilder().AppendHtml(div);
         }
 
+        public static IHtmlContent OrderStage(this IHtmlHelper helper, byte stage, bool registered, bool cartIsEmpty = false)
+        {
+            var items = new[]
+            {
+                new { Icon = "fa-shopping-cart", Title = "Košík", Href = "/Order", visible = true },
+                new { Icon = "fa-user", Title = "Dodacie údaje", Href = "/Order/PersonDetails", visible = !registered },
+                new { Icon = "fa-credit-card", Title = "Doprava a platba", Href = "/Order/Payment", visible = true },
+                new { Icon = "fa-list-alt", Title = "Zhrnutie", Href = "/Order/Summary", visible = true },
+            };
 
+            TagBuilder table = new TagBuilder("table");
+            table.AddCssClass("table text-center");
+            table.Attributes.Add("id", "orderStage");
+            TagBuilder topRow = new TagBuilder("tr");
+            TagBuilder bottoRow = new TagBuilder("tr");
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                var item = items[i];
+                var highlightClass = stage == i ? "text-primmary" : "";
+                var href = cartIsEmpty ? "#" : item.Href;
+
+                topRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass} h3\"><span class=\"fa {item.Icon}\"></span></a></td>");
+                bottoRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass}\">{item.Title}</a></td>");
+            }
+            return new HtmlContentBuilder().AppendHtml(table);
+        }
 
 
 

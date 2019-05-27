@@ -17,15 +17,18 @@ using X.PagedList;
 namespace E_Shop.Controllers
 {
     [ExceptionsToMessageFilter]
+    [PassCartStateFilter]
     public class ProductController : Controller
     {
         IProductManager productManager;
         ICategoryManager categoryManager;
+        IOrderManager orderManager;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager, IOrderManager orderManager)
         {
             this.productManager = productManager;
             this.categoryManager = categoryManager;
+            this.orderManager = orderManager;
         }
 
         [HttpGet]
@@ -152,6 +155,14 @@ namespace E_Shop.Controllers
                 Product = productManager.FindProductByUrl(url)
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProcessCartForm(int productId, int quantity)
+        {
+            orderManager.AddProducts(productId, quantity);
+            this.AddFlashMessage("Produkt bol pridaný do košíka", FlashMessageType.Success);
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
     }

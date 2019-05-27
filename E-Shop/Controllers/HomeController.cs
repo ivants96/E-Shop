@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using E_Shop.Models;
+using E_Shop.Classes;
 
 namespace E_Shop.Controllers
 {
+    [PassCartStateFilter]
     public class HomeController : Controller
     {
         public IActionResult Index()

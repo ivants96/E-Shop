@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace E_Shop.Controllers
 {
     [ExceptionsToMessageFilter]
+    [PassCartStateFilter]
     public class ReviewController : Controller
     {
         IReviewManager reviewManager;
