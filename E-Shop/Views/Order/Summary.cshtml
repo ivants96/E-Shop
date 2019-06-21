@@ -1,0 +1,167 @@
+﻿@using E_Shop.Extensions
+
+@model OrderSummaryViewModel
+
+@{
+    ViewData["Title"] = "Zhrnutie objednávky";
+}
+
+@{ string fullName = string.IsNullOrEmpty(Model.PersonDetail.CompanyName) ? Model.PersonDetail.FirstName + " " + Model.PersonDetail.LastName : Model.PersonDetail.CompanyName;}
+
+<style>
+    .card-header {
+        background-color: #F2FDFD;
+    }
+</style>
+
+<h2 class="text-success font-weight-bold mt-2 ml-3">@ViewData["Title"]</h2>
+@Html.OrderStage(4, User.Identity.IsAuthenticated)
+
+<table class="table table-bordered">
+    <thead>
+        <tr class="table table-primary">
+            <th class="w-50">Produkt</th>
+            <th class="w-25">Počet</th>
+            <th class="w-25">Cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr class="table-light">
+                <td>@item.Title</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+    <tfoot>
+        <tr class="table-info">
+            <td><strong>Celkom</strong></td>
+            <td>@Model.OrderSummary.Quantity</td>
+            <td><strong>@string.Format("{0} €", @Model.OrderSummary.Price - Model.TransportMethod.Price)</strong></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Kontaktné údaje</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold">Meno a Priezvisko</span>
+                    </div>
+                    <div class="col-auto">@fullName</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold"> E-mail</span>
+                    </div>
+                    <div class="col-auto">@Model.PersonDetail.Email</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <span class="font-weight-bold">Telefón</span>
+                    </div>
+                    <div class="col-auto">@Model.PersonDetail.PhoneNumber</div>
+                </div>
+            </div>
+        </div>
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Základné Informácie</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="font-weight-bold">Doprava</h6>
+                        <p>@Model.TransportMethod.Title @Model.TransportMethod.Price€</p>
+                    </div>
+                    <div class="col">
+                        <h6 class="font-weight-bold">Platba</h6>
+                        <p>@Model.WayOfPayment.Title</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Fakturačná adressa</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.PersonDetail.CompanyName))
+                {
+                    <div class="row mb-1">
+                        <div class="col-6"><span class="font-weight-bold">Názov firmy</span></div>
+                        <div class="col-6">@Model.PersonDetail.CompanyName</div>
+                    </div>
+                }
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Ulica a číslo domu</span></div>
+                    <div class="col-6">@Model.Address.StreetNameAndHouseNumber</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Mesto</span></div>
+                    <div class="col-6">@Model.Address.City</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">PSČ</span></div>
+                    <div class="col-6">@Model.Address.PostalCode</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Śtát</span></div>
+                    <div class="col-6">@Model.Address.Country</div>
+                </div>
+            </div>
+        </div>
+        <div class="card w-100 mt-5">
+            <div class="card-header">
+                <h5 class="font-italic">Dodacia adressa</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.PersonDetail.CompanyName))
+                {
+                    <div class="row mb-1">
+                        <div class="col-6"><span class="font-weight-bold">Názov firmy</span></div>
+                        <div class="col-6">@Model.PersonDetail.CompanyName</div>
+                    </div>
+                }
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Ulica a číslo domu</span></div>
+                    <div class="col-6">@Model.DeliveryAddress.StreetNameAndHouseNumber</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Mesto</span></div>
+                    <div class="col-6">@Model.DeliveryAddress.City</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">PSČ</span></div>
+                    <div class="col-6">@Model.DeliveryAddress.PostalCode</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-6"><span class="font-weight-bold">Śtát</span></div>
+                    <div class="col-6">@Model.DeliveryAddress.Country</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5 float-right">
+    <h6>Celkom bez DPH @string.Format("{0}€", (@Model.OrderSummary.Price - Model.TransportMethod.Price) * 0.8m)</h6>
+    <h6>Celkom vrátane DPH @string.Format("{0}€", @Model.OrderSummary.Price - Model.TransportMethod.Price)</h6>
+    <h6>Doprava @Model.TransportMethod.Price€</h6>
+    <h6 class="font-weight-bold text-danger">K úhrade celkom @Model.OrderSummary.Price€</h6>
+    <form asp-action="CompleteOrder" asp-controller="Order" method="post" class="mt-3">
+        <button type="submit" class="btn btn-success">Dokončiť objednávku</button>
+    </form>
+</div>
+
+
+

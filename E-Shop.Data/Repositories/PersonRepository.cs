@@ -13,7 +13,12 @@ namespace E_Shop.Data.Repositories
 
         public Person FindByUserId(string id)
         {
-            return dbSet.Where(p => p.User.Id == id).Single();
+            return dbSet.FirstOrDefault(p => p.User.Id == id);
+        }
+
+        public Person GetSeller()
+        {
+            return dbSet.Single(p => p.User.Email == "admin@sparky.sk");
         }
     }
 }

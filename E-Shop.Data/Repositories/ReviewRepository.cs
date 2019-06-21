@@ -18,7 +18,7 @@ namespace E_Shop.Data.Repositories
 
         public Review FindByUserIdProductId(string userId, int productId)
         {
-            return dbSet.Where(r => r.UserId == userId && r.ProductId == productId).SingleOrDefault();
+            return dbSet.Where(r => r.UserId == userId && r.ProductId == productId).FirstOrDefault();
         }
     }
 }

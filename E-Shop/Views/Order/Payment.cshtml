@@ -1,0 +1,41 @@
+﻿@using E_Shop.Extensions
+@model OrderPaymentViewModel
+
+@{
+    ViewData["Title"] = "Doprava a platba";
+}
+
+<h2 class="text-success font-weight-bold mt-2 ml-3">@ViewData["Title"]</h2>
+@Html.OrderStage(2, User.Identity.IsAuthenticated)
+
+<h3 class="ml-3 mb-3">Vyberte spôsob dopravy:</h3>
+<form method="post">
+
+    @{
+        foreach (var item in Model.TransportationMethods)
+        {
+            string id = "transportMethodId" + item.Value;
+            <div class="form-check mt-3">
+                @Html.RadioButton("transportMethodId", item.Value, true, new { id = @id })
+                <label for="@id" class="form-check-label"> @item.Text</label>
+            </div>
+            
+        }
+    }
+    <br />
+    <h3 class="ml-3 mb-3">Vyberte spôsob platby:</h3>
+    @{
+        foreach (var item in Model.WaysOfPayment)
+        {
+            string paymentMethodId = "paymentMethodId" + item.Value;
+            <div class="form-check mt-3">
+                @Html.RadioButton("paymentMethodId", item.Value, true, new { id = paymentMethodId, })
+                <label for="@paymentMethodId" class="form-check-label">@item.Text</label>
+            </div>
+           
+            
+
+        }
+    }
+    <input type="submit" value="Pokračovat" class="btn btn-primary mt-5 ml-3" />
+</form>

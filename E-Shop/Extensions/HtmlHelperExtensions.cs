@@ -89,10 +89,10 @@ namespace E_Shop.Extensions
         {
             var items = new[]
             {
-                new { Icon = "fa-shopping-cart", Title = "Košík", Href = "/Order", visible = true },
-                new { Icon = "fa-user", Title = "Dodacie údaje", Href = "/Order/PersonDetails", visible = !registered },
-                new { Icon = "fa-credit-card", Title = "Doprava a platba", Href = "/Order/Payment", visible = true },
-                new { Icon = "fa-list-alt", Title = "Zhrnutie", Href = "/Order/Summary", visible = true },
+                new { Icon = "fa-shopping-cart", Title = "Košík", Href = "/Order/Cart", visible = true},
+                new { Icon = "fa-user", Title = "Dodacie údaje", Href = "/Order/RegisterOrder", visible = !registered},
+                new { Icon = "fa-credit-card", Title = "Doprava a platba", Href = "/Order/Payment", visible = true},
+                new { Icon = "fa-list-alt", Title = "Zhrnutie", Href = "/Order/Summary", visible = true},
             };
 
             TagBuilder table = new TagBuilder("table");
@@ -104,12 +104,16 @@ namespace E_Shop.Extensions
             for (int i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-                var highlightClass = stage == i ? "text-primmary" : "";
-                var href = cartIsEmpty ? "#" : item.Href;
+                if (item.visible)
+                {
+                    var highlightClass = stage == i ? "text-primmary" : "";
+                    var href = cartIsEmpty ? "#" : item.Href;
 
-                topRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass} h3\"><span class=\"fa {item.Icon}\"></span></a></td>");
-                bottoRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass}\">{item.Title}</a></td>");
+                    topRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass} h3\"><span class=\"fa {item.Icon}\"></span></a></td>");
+                    bottoRow.InnerHtml.AppendHtml($"<td><a href=\"{href}\" class=\"{highlightClass}\">{item.Title}</a></td>");
+                }
             }
+            table.InnerHtml.AppendHtml(topRow).AppendHtml(bottoRow);
             return new HtmlContentBuilder().AppendHtml(table);
         }
 

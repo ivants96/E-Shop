@@ -40,7 +40,6 @@ namespace E_Shop.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-
             var person = _personManager.FindByUserId(_userManager.FindByNameAsync(User.Identity.Name).Result.Id);
             PersonEditViewModel model = new PersonEditViewModel()
             {
@@ -56,7 +55,7 @@ namespace E_Shop.Controllers
 
             return View(model);
         }
-
+               
         [HttpGet]
         public IActionResult Edit()
         {
@@ -80,8 +79,7 @@ namespace E_Shop.Controllers
         public IActionResult Edit(PersonEditViewModel PersonVM)
         {
             if (ModelState.IsValid)
-            {
-                var user = _userManager.FindByNameAsync(User.Identity.Name).Result.Id;                
+            {                           
                 EditPerson(PersonVM);
                 this.AddFlashMessage(new FlashMessage("Údaje boli úspešne zmenené.", FlashMessageType.Success));
                 return RedirectToAction("Profile", "Account");
@@ -108,7 +106,7 @@ namespace E_Shop.Controllers
                 Country = model.CountryDelivery
             };
 
-            _personManager.EditPerson(personDetail, address, deliveryAddress, userId);
+            _personManager.EditPerson(personDetail, address, deliveryAddress, userId: userId);
         }
     }
 }

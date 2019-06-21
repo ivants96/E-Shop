@@ -25,10 +25,10 @@ namespace E_Shop.Business.Managers
 
         }
 
-        public void AddPerson(PersonDetail personDetail, Address address, Address deliveryAddress, bool deliveryAddressIsAddress, string userId = null)
+        public Person AddPerson(PersonDetail personDetail, Address address, Address deliveryAddress, bool deliveryAddressIsAddress, string userId = null)
         {
             if (deliveryAddressIsAddress == true)
-            {                
+            {
                 deliveryAddress.StreetNameAndHouseNumber = address.StreetNameAndHouseNumber;
                 deliveryAddress.City = address.City;
                 deliveryAddress.PostalCode = address.PostalCode;
@@ -42,30 +42,36 @@ namespace E_Shop.Business.Managers
             {
                 PersonDetailId = personDetail.PersonDetailId,
                 AddressId = address.AddressId,
-                DeliveryAddressId =  deliveryAddress.AddressId,
+                DeliveryAddressId = deliveryAddress.AddressId,
                 UserId = userId
             };
 
             _personRepository.Add(person);
+            return person;
         }
 
-        public void EditPerson(PersonDetail personDetail, Address address, Address deliveryAddress, string userId)
+        public void EditPerson(PersonDetail personDetail, Address address, Address deliveryAddress, string userId = null, int? personId = null)
         {
             var person = _personRepository.FindByUserId(userId);
-
+            if (userId == null)
+            {
+                person = _personRepository.FindById(personId.Value);
+            }
             personDetail.PersonDetailId = person.PersonDetailId;
             address.AddressId = person.AddressId;
-            deliveryAddress.AddressId = person.DeliveryAddressId;           
-            
+            deliveryAddress.AddressId = person.DeliveryAddressId;
+
             _addressRepository.Update(address);
             _addressRepository.Update(deliveryAddress);
-            _personDetailRepository.Update(personDetail);            
+            _personDetailRepository.Update(personDetail);
             _personRepository.Update(person);
         }
 
         public Person FindById(int id) => _personRepository.FindById(id);
 
         public Person FindByUserId(string id) => _personRepository.FindByUserId(id);
+
+        public void InsertOrEdit(Person person) => _personRepository.Update(person);
 
     }
 }

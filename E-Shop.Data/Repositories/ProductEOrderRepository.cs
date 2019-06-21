@@ -20,7 +20,7 @@ namespace E_Shop.Data.Repositories
 
         public ProductEOrder FindByOrderIdProductId(int orderId, int productId)
         {
-            return dbSet.Where(p => p.EOrderId == orderId && p.ProductId == productId).SingleOrDefault();
+            return dbSet.FirstOrDefault(p => p.EOrderId == orderId && p.ProductId == productId);
         }
     }
 }

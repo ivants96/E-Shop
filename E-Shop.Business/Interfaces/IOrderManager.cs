@@ -14,8 +14,14 @@ namespace E_Shop.Business.Interfaces
         bool IsProductAvailable(int productId);
         void AddProducts(int productId, int quantity, int? orderId = null, bool ignoreHiddenProducts = false);
         OrderSummary GetOrderSummary(int? orderId = null);
-        List<OrderItemInfo> GetProduct(int? orderId = null);
+        List<OrderItemInfo> GetProducts(int? orderId = null);
         void UpdateProductInOrder(int orderId, int productId, int quantity);
-        void UpdateCart(IFormCollection);
+        void UpdateCart(IFormCollection form);
+        void SetPerson(Person person, int? orderId = null);
+        Dictionary<int, string> GetTransportMethods();
+        Dictionary<int, string> GetPaymentMethods();
+        void SetTransportMethod(int transportMethodId);
+        void SetPaymentMethod(int paymentMethodId);
+        void CompleteOrder();
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace E_Shop.Pages
 {
-    [ExceptionsToMessageFilter]
+    
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

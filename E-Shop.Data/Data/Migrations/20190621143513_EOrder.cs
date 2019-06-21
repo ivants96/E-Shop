@@ -38,6 +38,7 @@ namespace E_Shop.Data.Migrations
                     BuyerDeliveryAddressId = table.Column<int>(nullable: true),
                     SellerAddressId = table.Column<int>(nullable: true),
                     DeliveryProductId = table.Column<int>(nullable: true),
+                    WayOfPaymentId = table.Column<int>(nullable: true),
                     FinalPrice = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
@@ -91,6 +92,12 @@ namespace E_Shop.Data.Migrations
                         principalTable: "PersonDetails",
                         principalColumn: "PersonDetailId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EOrders_Products_WayOfPaymentId",
+                        column: x => x.WayOfPaymentId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,12 +130,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "13e0f942-6dae-4a88-a811-7acacdcc56fd", "944d3e87-cf8a-4ac6-afda-0589d5d29a84", "User", null });
+                values: new object[] { "6b9d7b06-e2fd-4cfa-8fec-2ee347725e02", "fceb7edd-9d45-4527-86b8-52628f9d24bc", "User", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cf27bba5-e7f2-43e5-b3dd-577828317907", "58221b7f-6f5c-401b-8aa5-97a5d37ebc0a", "Admin", null });
+                values: new object[] { "644cd43d-a741-485c-a69f-9c2ab50be401", "e47f5f8a-f2c9-445b-870f-8188fb214284", "Admin", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EOrders_BuyerAddressId",
@@ -171,6 +178,11 @@ namespace E_Shop.Data.Migrations
                 column: "SellerPersonDetailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EOrders_WayOfPaymentId",
+                table: "EOrders",
+                column: "WayOfPaymentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductEOrders_EOrderId",
                 table: "ProductEOrders",
                 column: "EOrderId");
@@ -192,12 +204,12 @@ namespace E_Shop.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "13e0f942-6dae-4a88-a811-7acacdcc56fd", "944d3e87-cf8a-4ac6-afda-0589d5d29a84" });
+                keyValues: new object[] { "644cd43d-a741-485c-a69f-9c2ab50be401", "e47f5f8a-f2c9-445b-870f-8188fb214284" });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumns: new[] { "Id", "ConcurrencyStamp" },
-                keyValues: new object[] { "cf27bba5-e7f2-43e5-b3dd-577828317907", "58221b7f-6f5c-401b-8aa5-97a5d37ebc0a" });
+                keyValues: new object[] { "6b9d7b06-e2fd-4cfa-8fec-2ee347725e02", "fceb7edd-9d45-4527-86b8-52628f9d24bc" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",

@@ -12,7 +12,7 @@ namespace E_Shop.Data.Repositories
 
         public Product FindByUrl(string url)
         {
-            return dbSet.SingleOrDefault(p => p.Url == url && !p.Hidden);
+            return dbSet.FirstOrDefault(p => p.Url == url);
         }
         //returns list of products which contain current search phrase in their title, description 
         public List<Product> SearchProducts(string searchPhrase)
@@ -36,7 +36,11 @@ namespace E_Shop.Data.Repositories
             .Select(c => c.CategoryId)
             .Contains(categoryId))
             .ToList();
+        }
 
+        public Product GetPaymentInAdvance()
+        {
+           return dbSet.Single(p => p.Url == "prevod-na-ucet");
         }
 
 

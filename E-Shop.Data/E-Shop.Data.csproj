@@ -21,6 +21,7 @@
     <Compile Remove="Data\Migrations\20190309182740_RelationCreate.cs" />
     <Compile Remove="Data\Migrations\20190309215005_RelationshipCreate.cs" />
     <Compile Remove="Data\Migrations\20190411210741_Person.cs" />
+    <Compile Remove="Data\Migrations\20190519184235_EOrder.cs" />
   </ItemGroup>
 
   <ItemGroup>

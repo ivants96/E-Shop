@@ -7,13 +7,18 @@
 }
 @inject UserManager<ApplicationUser> UserManager
 
+<style>
+    .card-header {
+        background-color: #F2FDFD;
+    }
+</style>
 <partial name="_AccountMenu" />
 <h2 class="text-primary mt-1">Moje údaje</h2>
 @{ string accoutType = string.IsNullOrEmpty(Model.DIČ) ? "Fyzická osoba" : "Právnická osoba";}
 @{ string fullName = string.IsNullOrEmpty(Model.CompanyName) ? Model.FirstName + " " + Model.LastName : Model.CompanyName;}
 @{ var userMail = User.Identity.Name;}
 <div class="row">
-   
+
     <div class="col-md-6 mt-5">
         <div class="card w-100">
             <div class="card-header">

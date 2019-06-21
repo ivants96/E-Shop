@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace E_Shop.Business.Managers
 {
     public class CategoryManager : ICategoryManager
@@ -26,14 +27,26 @@ namespace E_Shop.Business.Managers
             this.memoryCache = memoryCache;
         }
 
-        public List<Category> GetLeaves()
+        public Category GetPaymentMethodsCategory()
         {
-            return categoryRepository.GetLeaves();
+            var category = categoryRepository.GetWayOfPaymentCategory();
+            return category;
+        }
+
+        public Category GetTransportMethodsCategory()
+        {
+            var category = categoryRepository.GetTransportCategory();
+            return category;
+        }
+
+        public List<Category> GetLeaves(bool includeHidden = false)
+        {
+            return categoryRepository.GetLeaves(includeHidden);
         }
 
         public List<Category> GetRoots()
         {
-            if(!memoryCache.TryGetValue("CategoryRoots", out List<Category> result))
+            if (!memoryCache.TryGetValue("CategoryRoots", out List<Category> result))
             {
                 result = categoryRepository.GetRoots();
                 memoryCache.Set("CategoryRoots", result, new DateTimeOffset(DateTime.Now.AddHours(1)));

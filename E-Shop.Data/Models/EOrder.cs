@@ -24,7 +24,7 @@ namespace E_Shop.Data.Models
         public virtual PersonDetail SellerPersonDetail { get; set; }
         public virtual Address BuyerAddress { get; set; }
         public virtual Address BuyerDeliveryAddress { get; set; }
-        public virtual Address SellerAddress { get; set; }        
+        public virtual Address SellerAddress { get; set; }
 
         [ForeignKey("Buyer")]
         public int? BuyerId { get; set; }
@@ -42,10 +42,13 @@ namespace E_Shop.Data.Models
         public int? SellerAddressId { get; set; }
         [ForeignKey("DeliveryProduct")]
         public int? DeliveryProductId { get; set; }
+        [ForeignKey("WayOfPayment")]
+        public int? WayOfPaymentId { get; set; }
 
-        public virtual Product  DeliveryProduct { get; set; }
+        public virtual Product DeliveryProduct { get; set; }
+        public virtual Product WayOfPayment { get; set; }
         public virtual ICollection<ProductEOrder> ProductEOrders { get; set; }
-        public decimal ?FinalPrice { get; set; }
+        public decimal? FinalPrice { get; set; }
 
         public EOrder()
         {
@@ -67,17 +70,23 @@ namespace E_Shop.Data.Models
 
     public enum OrderState : byte
     {
-        [Description("Zrušená")]
-        CANCELED,
         [Description("Vytvorená")]
         CREATED,
-        [Description("Pozastavená")]
-        SUSPENDED,
-        [Description("Potvrdená")]
-        ACCEPTED,
+        [Description("Vytvorená - čaká sa na úhradu")]
+        CREATEDAWAITINGPAYMENT,
+        [Description("Spracováva sa")]
+        PROCESSING,
+        [Description("Uhradená - spracováva sa")]
+        PAIDPROCESSING,
+        [Description("Zrušená")]
+        CANCELED,
+        [Description("Odoslaná")]
+        SENT,
         [Description("Dokončená")]
         COMPLETED,
-        [Description("Odoslaná")]
-        SENT
+        [Description("Vrátená")]
+        RETURNED,
+        [Description("Reklamácia")]
+        COMPLAINT
     }
 }

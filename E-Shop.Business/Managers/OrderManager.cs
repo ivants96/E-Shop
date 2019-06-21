@@ -18,6 +18,7 @@ namespace E_Shop.Business.Managers
     {
         private IProductRepository _productRepository;
         private IProductEOrderRepository _productEOrderRepository;
+        private IPersonRepository _personRepository;
         private IEOrderRepository _eOrderRepository;
         private ICategoryRepository _categoryRepository;
         private readonly HttpContext httpContext;
@@ -28,6 +29,7 @@ namespace E_Shop.Business.Managers
             IProductEOrderRepository productEOrderRepository,
             IEOrderRepository eOrderRepository,
             ICategoryRepository categoryRepository,
+            IPersonRepository personRepository,
             IHttpContextAccessor context
             )
         {
@@ -35,6 +37,7 @@ namespace E_Shop.Business.Managers
             _productEOrderRepository = productEOrderRepository;
             _eOrderRepository = eOrderRepository;
             _categoryRepository = categoryRepository;
+            _personRepository = personRepository;
             httpContext = context.HttpContext;
         }
 
@@ -65,13 +68,13 @@ namespace E_Shop.Business.Managers
         {
             if (orderId.HasValue)
             {
-                _eOrderRepository.FindById(orderId.Value);
+                return _eOrderRepository.FindById(orderId.Value);
             }
 
             int? attemptRetrieve = httpContext.Session.GetInt32("orderId");
             if (attemptRetrieve.HasValue)
             {
-                _eOrderRepository.FindById(attemptRetrieve.Value);
+                return _eOrderRepository.FindById(attemptRetrieve.Value);
             }
 
             int id = 0;
@@ -91,7 +94,7 @@ namespace E_Shop.Business.Managers
             // if order wasn't found create new one
             if (order == null)
             {
-                CreateOrder();
+                order = CreateOrder();
             }
 
             httpContext.Session.SetInt32("orderId", order.EOrderId);
@@ -155,12 +158,12 @@ namespace E_Shop.Business.Managers
             {
                 Price = items.Sum(i => i.Quantity * i.Product.Price),
                 Quantity = items.Sum(i => i.Quantity)
-            };            
+            };
             return result;
         }
 
         // Displays list of products in the cart
-        public List<OrderItemInfo> GetProduct (int? orderId = null)
+        public List<OrderItemInfo> GetProducts(int? orderId = null)
         {
             var order = GetOrder(orderId);
             if (order == null)
@@ -174,8 +177,8 @@ namespace E_Shop.Business.Managers
                     Price = x.Product.Price,
                     Quantity = x.Quantity,
                     Url = x.Product.Url,
-                    Title = x.Product.Title                    
-                }).ToList();                
+                    Title = x.Product.Title
+                }).ToList();
         }
 
         public void UpdateProductInOrder(int orderId, int productId, int quantity)
@@ -197,25 +200,84 @@ namespace E_Shop.Business.Managers
             }
         }
 
-       
-
-        public void UpdateCart(IFormCollection  form)
+        public void UpdateCart(IFormCollection form)
         {
             var order = GetOrder();
             foreach (var key in form.Keys)
             {
-                if (!key.StartsWith("quantity_")) // input for quantity will have prefix _quantity@item.ProductId
+                if (!key.StartsWith("quantity_")) // input for quantity will have prefix _quantity@item.ProductId in it's name attribute
                 {
                     continue;
                 }
-                int productId = int.Parse(key.Remove(0, 9)); // remove prefix _quantity
+                int productId = int.Parse(key.Remove(0, 9)); // remove prefix _quantity to get productId
                 form.TryGetValue(key, out var values); // Saves input value to variable values
                 int quantity = int.Parse(values.First()); // Gets value from input
                 UpdateProductInOrder(order.EOrderId, productId, quantity);
             }
         }
 
+        public void SetPerson(Person person, int? orderId = null)
+        {
+            var order = GetOrder(orderId, false);
+            order.BuyerPersonDetailId = person.PersonDetailId;
+            order.BuyerAddressId = person.AddressId;
+            order.BuyerDeliveryAddressId = person.DeliveryAddressId;
+            order.BuyerId = person.PersonId;
+            _eOrderRepository.Update(order);
+        }
 
+
+
+        public Dictionary<int, string> GetPaymentMethods()
+        {
+            var paymentCategory = _categoryRepository.GetWayOfPaymentCategory();
+            return paymentCategory.CategoryProducts.ToDictionary(cp => cp.ProductId, cp => $"{cp.Product.Title}");
+        }
+
+        public Dictionary<int, string> GetTransportMethods()
+        {
+            var transportCategory = _categoryRepository.GetTransportCategory();
+            return transportCategory.CategoryProducts.ToDictionary(cp => cp.ProductId, cp => $"{cp.Product.Title} {cp.Product.Price.ToString()} €");
+        }
+
+        public void SetTransportMethod(int transportMethodId)
+        {
+            var order = GetOrder(null, false);
+            order.DeliveryProductId = transportMethodId;
+            _eOrderRepository.Update(order);
+        }
+
+        public void SetPaymentMethod(int paymentMethodId)
+        {
+            var order = GetOrder(null, false);
+            order.WayOfPaymentId = paymentMethodId;
+            _eOrderRepository.Update(order);
+        }
+
+        public void CompleteOrder()
+        {
+            var order = GetOrder(null, false);
+            var seller = _personRepository.GetSeller();
+            var paymentInAdvance = _productRepository.GetPaymentInAdvance();
+            order.SellerId = seller.PersonId;
+            order.SellerPersonDetailId = seller.PersonDetailId;
+            order.SellerAddressId = seller.AddressId;
+            if (order.WayOfPaymentId == paymentInAdvance.ProductId)
+            {
+                order.OrderState = OrderState.CREATEDAWAITINGPAYMENT;
+            }
+            else
+            {
+                order.OrderState = OrderState.CREATED;
+            }
+
+            var products = _productEOrderRepository.FindByOrderId(order.EOrderId).ToList();
+            var priceOfProducts = products.Sum(p => p.Quantity * p.Product.Price);
+            decimal finalPrice = priceOfProducts + order.DeliveryProduct.Price;
+            order.FinalPrice = finalPrice;
+            _eOrderRepository.Update(order);
+            httpContext.Session.Remove("orderId");
+        }
 
 
     }

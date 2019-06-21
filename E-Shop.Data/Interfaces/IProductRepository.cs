@@ -11,5 +11,6 @@ namespace E_Shop.Data.Repositories
         Product FindByUrl(string url);
         List<Product> FindByCategoryId(int categoryId);
         List<Product> SearchProducts(string searchPhrase);
+        Product GetPaymentInAdvance();
     }
 }

@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace E_Shop.Pages
 {
+    
     public class RegModel
     {
         [Required(ErrorMessage = "Email je povinný")]

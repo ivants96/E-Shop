@@ -1,0 +1,76 @@
+﻿@using E_Shop.Extensions
+
+@model OrderIndexViewModel
+@{
+    ViewData["Title"] = "Košík";
+}
+
+<h2 class="text-success font-weight-bold mt-2 ml-3">@ViewData["Title"]</h2>
+@Html.OrderStage(0, User.Identity.IsAuthenticated, Model.OrderItems.ToArray().Length == 0)
+<form method="post" id="cart-management">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-primary">
+                <th class="w-50">Produkt</th>
+                <th class="w-25">Počet</th>
+                <th class="w-25">Cena</th>
+            </tr>   
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in @Model.OrderItems)
+                {
+                    <tr>
+                        <td><a asp-controller="Product" asp-action="Detail" asp-route-url="@item.Url">@item.Title</a></td>
+                        <td>
+                            <div class="input-group">
+                                <input type="number" name="quantity_@item.ProductId" class="form-control input-quantity" value="@item.Quantity" />
+                                <button type="button" class="btn btn-muted input-group-btn remove-button">
+                                    <span class="fa fa-remove text-danger"></span>
+                                </button>
+                            </div>
+                        </td>
+                        <td>@string.Format("{0} €", item.Price * item.Quantity)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr class="table-info">
+                <td><strong>Celkom</strong></td>
+                <td>@Model.OrderSummary.Quantity</td>
+                <td><strong>@string.Format("{0} €", Model.OrderSummary.Price)</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="text-center">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Pokračovat v nákupe</a>
+        @{
+            if (Model.OrderItems.ToArray().Length != 0)
+            {
+                <button type="submit" class="btn btn-primary ">Prepočítať</button>
+                if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-action="Payment" class="btn btn-primary">Ďalej</a>
+                }
+                else
+                {
+                    <a asp-action="RegisterOrder" class="btn btn-primary">Ďalej</a>
+                }
+            }
+        }
+    </div>
+</form>
+
+@section Scripts
+{ 
+<script>
+        $(document).ready(function () {
+            $("#cart-management .remove-button").click(function () {
+                $(this).prev().val(0);
+            });
+        });
+</script>
+}
+
+

@@ -7,7 +7,7 @@ namespace E_Shop.Business.Interfaces
 {
     public interface IPersonManager
     {
-        void AddPerson(
+        Person AddPerson(
            PersonDetail personDetail,
            Address address,
            Address deliveryAddress,
@@ -15,14 +15,19 @@ namespace E_Shop.Business.Interfaces
            string userId = null
            );
 
-        void EditPerson(
-          PersonDetail personDetail,
-          Address address,
-          Address deliveryAddress,
-          string userId
-          );
+        void EditPerson(PersonDetail personDetail,
+            Address address,
+            Address deliveryAddress,
+            string userId = null,
+            int? personId = null);
 
         Person FindById(int id);
         Person FindByUserId(string id);
+
+        void InsertOrEdit(Person person);
+              
+       
+
+          
     }
 }

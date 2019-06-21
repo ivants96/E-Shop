@@ -9,12 +9,19 @@ namespace E_Shop.Data.Repositories
 {
     public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
-        public CategoryRepository(ApplicationDbContext context) : base (context) { }
+        public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
-        public List<Category> GetLeaves()
+
+        public List<Category> GetLeaves(bool includeHidden = false)
         {
-            // Gets categories that are last in a tree of categories e.g It gets Dynamic from tree rMusicEquipment-Microphones-Dynamic
-            return dbSet.Where(c => c.ChildCategories.Count == 0 && !c.Hidden).ToList();            
+            if (includeHidden)
+            {
+                return dbSet.Where(c => c.ChildCategories.Count == 0).ToList();
+            }
+            else
+            {
+                return dbSet.Where(c => c.ChildCategories.Count == 0 && !c.Hidden).ToList();
+            }
         }
 
         public List<Category> GetRoots()
@@ -22,6 +29,16 @@ namespace E_Shop.Data.Repositories
             return dbSet.Where(c => c.ParentCategoryId == null && !c.Hidden)
                 .OrderBy(c => c.OrderNo)
                 .ToList();
+        }
+
+        public Category GetTransportCategory()
+        {
+            return dbSet.Single(c => c.Url == "sposoby-dopravy");
+        }
+
+        public Category GetWayOfPaymentCategory()
+        {
+            return dbSet.Single(c => c.Url == "sposoby-platby");
         }
     }
 }

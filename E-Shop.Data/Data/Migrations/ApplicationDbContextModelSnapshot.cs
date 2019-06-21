@@ -180,6 +180,8 @@ namespace E_Shop.Data.Migrations
 
                     b.Property<string>("Token");
 
+                    b.Property<int?>("WayOfPaymentId");
+
                     b.HasKey("EOrderId");
 
                     b.HasIndex("BuyerAddressId");
@@ -197,6 +199,8 @@ namespace E_Shop.Data.Migrations
                     b.HasIndex("SellerId");
 
                     b.HasIndex("SellerPersonDetailId");
+
+                    b.HasIndex("WayOfPaymentId");
 
                     b.ToTable("EOrders");
                 });
@@ -379,8 +383,8 @@ namespace E_Shop.Data.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "13e0f942-6dae-4a88-a811-7acacdcc56fd", ConcurrencyStamp = "944d3e87-cf8a-4ac6-afda-0589d5d29a84", Name = "User" },
-                        new { Id = "cf27bba5-e7f2-43e5-b3dd-577828317907", ConcurrencyStamp = "58221b7f-6f5c-401b-8aa5-97a5d37ebc0a", Name = "Admin" }
+                        new { Id = "6b9d7b06-e2fd-4cfa-8fec-2ee347725e02", ConcurrencyStamp = "fceb7edd-9d45-4527-86b8-52628f9d24bc", Name = "User" },
+                        new { Id = "644cd43d-a741-485c-a69f-9c2ab50be401", ConcurrencyStamp = "e47f5f8a-f2c9-445b-870f-8188fb214284", Name = "Admin" }
                     );
                 });
 
@@ -523,6 +527,10 @@ namespace E_Shop.Data.Migrations
                     b.HasOne("E_Shop.Data.Models.PersonDetail", "SellerPersonDetail")
                         .WithMany()
                         .HasForeignKey("SellerPersonDetailId");
+
+                    b.HasOne("E_Shop.Data.Models.Product", "WayOfPayment")
+                        .WithMany()
+                        .HasForeignKey("WayOfPaymentId");
                 });
 
             modelBuilder.Entity("E_Shop.Data.Models.Person", b =>

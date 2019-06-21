@@ -34,18 +34,25 @@
     <div class="row">
         @foreach (var p in Model.Products)
         {
-            <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6" >
-                @{
-                    if (this.Context.User.IsInRole("Admin"))
-                    {
-                        <partial name="_AdminProductThumbnailView" model="p" />
+            if (p.Hidden == true)
+            {
+                <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6" style="display:none;"></div>
+            }
+            else
+            {
+                <div class="border border-top-0 border-grey col-lg-3 col-md-4 col-sm-6 col-6">
+                    @{
+                        if (this.Context.User.IsInRole("Admin"))
+                        {
+                            <partial name="_AdminProductThumbnailView" model="p" />
+                        }
+                        else
+                        {
+                            <partial name="_UserProductThumbnailView" model="p" />
+                        }
                     }
-                    else
-                    {
-                        <partial name="_UserProductThumbnailView" model="p" />
-                    }
-                }
-            </div>
+                </div>
+            }
         }
     </div>
 </div>

@@ -21,11 +21,15 @@ namespace E_Shop.Classes
 
             CreateMap<PersonRegisterViewModel, PersonDetail>();
             CreateMap<PersonRegisterViewModel, Address>();
-          
 
+            CreateMap<PersonDetail, PersonRegisterViewModel>();
+            CreateMap<Address, PersonRegisterViewModel>();
            
-           
-          
+
+
+
+
+
         }
     }
 }

@@ -52,7 +52,7 @@ namespace E_Shop.Controllers
                     throw new NullReferenceException("Produkt nebol nájdený");
                 }
             }
-            model.AvailableCategories = categoryManager.GetLeaves();
+            model.AvailableCategories = categoryManager.GetLeaves(true);
             return View(model);
         }
 
@@ -68,7 +68,7 @@ namespace E_Shop.Controllers
                 return View(model);
             }
 
-            var AllCategories = categoryManager.GetLeaves();
+            var AllCategories = categoryManager.GetLeaves(true);
 
             // najdi ze všech dostupných kategorií ty, které jsou označené (PostedCategoried[index] == true)
             int[] selectedCategories = AllCategories.Where(cat => model.PostedCategories[AllCategories.IndexOf(cat)])

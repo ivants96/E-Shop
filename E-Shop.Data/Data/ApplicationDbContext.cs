@@ -75,6 +75,7 @@ namespace E_Shop.Data
                 new Category() { CategoryId = 4, ParentCategoryId = 1, Title = "Kvetináče", Url = "kvetinace", OrderNo = 3, Hidden = false },
                 new Category() { CategoryId = 5, ParentCategoryId = 2, Title = "Riad", Url = "riad", OrderNo = 5, Hidden = false },
                 new Category() { CategoryId = 6, ParentCategoryId = 2, Title = "Kuchynské dosky", Url = "kuchynske-dosky", OrderNo = 6, Hidden = false }
+
             );
 
 
