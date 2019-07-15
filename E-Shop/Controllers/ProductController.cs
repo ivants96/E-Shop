@@ -70,11 +70,12 @@ namespace E_Shop.Controllers
 
             var AllCategories = categoryManager.GetLeaves(true);
 
-            // najdi ze všech dostupných kategorií ty, které jsou označené (PostedCategoried[index] == true)
-            int[] selectedCategories = AllCategories.Where(cat => model.PostedCategories[AllCategories.IndexOf(cat)])
-                                                        .Select(cat => cat.CategoryId)  // z každéj kategorie nás zaujíma len jej ID
+            // nájdi zo všetkých dostupných kategorií tie, ktoré sú označené (PostedCategories[index] == true)
+            int[] selectedCategories = AllCategories.Where(c => model.PostedCategories[AllCategories.IndexOf(c)])
+                                                        .Select(c => c.CategoryId)  // z každéj kategorie nás zaujíma len jej ID
                                                         .ToArray();
-            // uloženie produktu aj s jeho väzbami                                    
+
+            // uloženie produktu aj s jeho väzbami              
             productManager.SaveProduct(model.Product);
             categoryManager.UpdateProductCategories(model.Product.ProductId, selectedCategories);
             productManager.SaveProductImages(model.Product, model.UploadedImages);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,6 +7,7 @@ using System.Text;
 
 namespace E_Shop.Data.Models
 {
+    [JsonObject(IsReference = true)]
     public class Person
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]

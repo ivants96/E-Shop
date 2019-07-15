@@ -55,7 +55,7 @@ namespace E_Shop.Business.Managers
             var product = FindProductById(id);
 
             int imagesCount = product.ImagesCount;
-            RemoveThumbnailFile(product.ProductId);// odstranění thumbnailu
+            RemoveThumbnailFile(product.ProductId);// odstránenie thumbnailu
             for (int i = 0; i < imagesCount; i++)// odstránenie obrázkov
             {
                 RemoveImageFile(product.ProductId, i);

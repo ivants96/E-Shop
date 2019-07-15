@@ -54,7 +54,7 @@ namespace E_Shop.Business.Managers
             return result;
         }
 
-        public void UpdateProductCategories(int productId, int[] categories) //Enter product id and array of categories you wish to add
+        public void UpdateProductCategories(int productId, int[] categories) //Enter product id and array of categories you wish to add to the product
         {
             Product product = productRepository.FindById(productId);
 
@@ -70,9 +70,7 @@ namespace E_Shop.Business.Managers
                     CategoryId = categories[i],
                     ProductId = product.ProductId
                 };
-                product.CategoryProducts.Add(toAdd);
                 categoryProductRepository.Update(toAdd);
-
             }
         }
 

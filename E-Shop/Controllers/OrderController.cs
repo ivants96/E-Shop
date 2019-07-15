@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,7 +14,13 @@ using E_Shop.Models.PersonViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 
 namespace E_Shop.Controllers
 {
@@ -23,24 +30,33 @@ namespace E_Shop.Controllers
     {
         IOrderManager orderManager;
         IPersonManager personManager;
+        private IRazorViewEngine razorViewEngine;
+        private ITempDataProvider tempDataProvider;
         private HttpContext httpContext;
         private IMapper _mapper;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> signInManager;
+        private IServiceProvider serviceProvider;
 
         public OrderController(IOrderManager orderManager,
             IPersonManager personManager,
             IHttpContextAccessor httpContext,
             IMapper mapper,
+            IRazorViewEngine razorViewEngine,
+            ITempDataProvider tempDataProvider,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IServiceProvider serviceProvider)
         {
             this.orderManager = orderManager;
             this.personManager = personManager;
             this.httpContext = httpContext.HttpContext;
+            this.razorViewEngine = razorViewEngine;
+            this.tempDataProvider = tempDataProvider;
             _mapper = mapper;
             _userManager = userManager;
             this.signInManager = signInManager;
+            this.serviceProvider = serviceProvider;
         }
 
         [HttpGet]
@@ -83,11 +99,6 @@ namespace E_Shop.Controllers
                 _mapper.Map(person.Address, model);
             }
 
-            ViewData["orderId"] = order.EOrderId;
-            if (order.BuyerId != null)
-            {
-                ViewData["Buyer"] = order.BuyerId;
-            }
             return View(model);
         }
 
@@ -95,7 +106,7 @@ namespace E_Shop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterOrder(PersonRegisterViewModel model, bool createAccount = false)
         {
-
+            // in case that person doesn't want to register while filling out order details
             if (!createAccount)
             {
                 ModelState.Remove("Password");
@@ -108,7 +119,7 @@ namespace E_Shop.Controllers
             }
 
             var order = orderManager.GetOrder();
-            if (order.BuyerId != null)
+            if (order.BuyerId != null) // if user clicks back on RegisterOrder and edits order details
             {
                 ModelState.Remove("DeliveryAddressIsAddress");
                 if (model.DeliveryAddressIsAddress == true && string.IsNullOrEmpty(model.StreetHouseNumberDelivery)
@@ -180,7 +191,6 @@ namespace E_Shop.Controllers
             {
                 TransportationMethods = new SelectList(orderManager.GetTransportMethods(), "Key", "Value"),
                 WaysOfPayment = new SelectList(orderManager.GetPaymentMethods(), "Key", "Value")
-
             };
 
             return View(model);
@@ -242,15 +252,82 @@ namespace E_Shop.Controllers
             };
 
             model.OrderSummary.Price += transportMethod.Price;
-
+            httpContext.Session.SetString("SummaryViewModel", JsonConvert.SerializeObject(model));
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult CompleteOrder()
+        public async Task<IActionResult> CompleteOrder()
         {
-            orderManager.CompleteOrder();
+            var model = JsonConvert.DeserializeObject<OrderSummaryViewModel>(httpContext.Session.GetString("SummaryViewModel"));
+            orderManager.CompleteOrder(await RenderToStringAsync("_SummaryPartial", model));
+            this.AddFlashMessage("Ďakujeme za Váš nákup! Na e-mail Vám bolo odoslané povtrdenie objednávky", FlashMessageType.Success);
             return RedirectToAction("Index", "Home");
+        }
+
+        private string ConvertViewToString(string viewName, object model)
+        {
+            var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+
+            using (var sw = new StringWriter())
+            {
+                var viewResult = razorViewEngine.FindView(actionContext, viewName, false);
+
+                if (viewResult.View == null)
+                {
+                    throw new ArgumentNullException($"Nepodarilo sa nájsť view s názvom {viewName}");
+                }
+
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = model
+                };
+
+                var viewContext = new ViewContext(
+                    actionContext,
+                    viewResult.View,
+                    viewDictionary,
+                    new TempDataDictionary(actionContext.HttpContext, tempDataProvider),
+                    sw,
+                    new HtmlHelperOptions()
+                );
+
+                viewResult.View.RenderAsync(viewContext).Wait();
+                return sw.ToString();
+            }
+        }
+
+        public async Task<string> RenderToStringAsync(string viewName, object model)
+        {
+            var httpContext = new DefaultHttpContext() { RequestServices = serviceProvider };
+            var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+
+            using (var sw = new StringWriter())
+            {
+                var viewResult = razorViewEngine.FindView(actionContext, viewName, false);
+
+                if (viewResult.View == null)
+                {
+                    throw new ArgumentNullException($"{viewName} does not match any available view");
+                }
+
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = model
+                };
+
+                var viewContext = new ViewContext(
+                    actionContext,
+                    viewResult.View,
+                    viewDictionary,
+                    new TempDataDictionary(actionContext.HttpContext, tempDataProvider),
+                    sw,
+                    new HtmlHelperOptions()
+                );
+
+                await viewResult.View.RenderAsync(viewContext);
+                return sw.ToString();
+            }
         }
 
         private Person AddPerson(PersonRegisterViewModel PersonVM)
@@ -286,7 +363,6 @@ namespace E_Shop.Controllers
 
             personManager.EditPerson(personDetail, address, deliveryAddress, personId: personId);
         }
-
 
 
     }

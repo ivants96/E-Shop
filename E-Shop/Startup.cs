@@ -22,6 +22,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using E_Shop.Classes;
 using AutoMapper;
+using E_Shop.Business.Classes;
+using E_Shop.Business.Services;
 
 namespace E_Shop
 {
@@ -39,13 +41,13 @@ namespace E_Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddEntityFrameworkProxies();
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -76,12 +78,13 @@ namespace E_Shop
             services.AddScoped<IEOrderRepository, EOrderRepository>();
             services.AddScoped<IProductEOrderRepository, ProductEOrderRepository>();
 
-
             services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IReviewManager, ReviewManager>();
             services.AddScoped<IPersonManager, PersonManager>();
             services.AddScoped<IOrderManager, OrderManager>();
+            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc()
             .AddRazorPagesOptions(options =>
@@ -109,7 +112,7 @@ namespace E_Shop
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-           
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

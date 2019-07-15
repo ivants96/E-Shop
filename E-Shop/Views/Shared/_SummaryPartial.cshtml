@@ -1,22 +1,14 @@
 ﻿@using E_Shop.Extensions
 @model OrderSummaryViewModel
 
-@{
-    ViewData["Title"] = "Zhrnutie objednávky";
-}
-
-
-<h2 class="text-success font-weight-bold mt-2 ml-3">@ViewData["Title"]</h2>
-@Html.OrderStage(4, User.Identity.IsAuthenticated)
 @{ string fullName = string.IsNullOrEmpty(Model.PersonDetail.CompanyName) ? Model.PersonDetail.FirstName + " " + Model.PersonDetail.LastName : Model.PersonDetail.CompanyName;}
 
 <style>
     .card-header {
         background-color: #F2FDFD;
     }
-
-    #totalPrice {
-        color: red;
+    #totalPrice{
+        color:red;
     }
 </style>
 
@@ -51,7 +43,7 @@
     <div class="col-md-6">
         <div class="card w-100 mt-5">
             <div class="card-header">
-                <h4 class="font-italic">Kontaktné údaje</h4>
+                <h4 class="font-italic">Kontaktné údaje</h4>    
             </div>
             <div class="card-body">
                 <div class="row">
@@ -151,12 +143,3 @@
     <h4>Doprava @Model.TransportMethod.Price€</h4>
     <h4 class="font-weight-bold" id="totalPrice">K úhrade celkom @Model.OrderSummary.Price€</h4>
 </div>
-@*<partial name="_SummaryPartial" model="@Model" />*@
-<div class="float-right" style="clear: both;">
-    <form asp-action="CompleteOrder" asp-controller="Order" method="post" class="mt-3">
-        <button type="submit" class="btn btn-success">Dokončiť objednávku</button>
-    </form>
-</div>
-
-
-

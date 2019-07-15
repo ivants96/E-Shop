@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E_Shop.Models
+namespace E_Shop.Models 
 {
     public class ManageProductViewModel
     {

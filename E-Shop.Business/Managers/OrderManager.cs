@@ -22,6 +22,7 @@ namespace E_Shop.Business.Managers
         private IEOrderRepository _eOrderRepository;
         private ICategoryRepository _categoryRepository;
         private readonly HttpContext httpContext;
+        private IEmailSender emailSender;
 
         public OrderManager
             (
@@ -30,7 +31,8 @@ namespace E_Shop.Business.Managers
             IEOrderRepository eOrderRepository,
             ICategoryRepository categoryRepository,
             IPersonRepository personRepository,
-            IHttpContextAccessor context
+            IHttpContextAccessor context,
+            IEmailSender emailSender
             )
         {
             _productRepository = productRepository;
@@ -39,6 +41,7 @@ namespace E_Shop.Business.Managers
             _categoryRepository = categoryRepository;
             _personRepository = personRepository;
             httpContext = context.HttpContext;
+            this.emailSender = emailSender;
         }
 
         public EOrder CreateOrder()
@@ -254,7 +257,7 @@ namespace E_Shop.Business.Managers
             _eOrderRepository.Update(order);
         }
 
-        public void CompleteOrder()
+        public void CompleteOrder(string emailBody)
         {
             var order = GetOrder(null, false);
             var seller = _personRepository.GetSeller();
@@ -276,9 +279,15 @@ namespace E_Shop.Business.Managers
             decimal finalPrice = priceOfProducts + order.DeliveryProduct.Price;
             order.FinalPrice = finalPrice;
             _eOrderRepository.Update(order);
+            SendOrderCreatedEmail(order, emailBody);
             httpContext.Session.Remove("orderId");
         }
 
+
+        private void SendOrderCreatedEmail(EOrder order, string emailBody)
+        {
+            emailSender.SendEmail(order.BuyerPersonDetail.Email, "Objednávka vytvorená", emailBody);
+        }
 
     }
 }

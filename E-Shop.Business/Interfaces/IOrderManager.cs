@@ -22,6 +22,7 @@ namespace E_Shop.Business.Interfaces
         Dictionary<int, string> GetPaymentMethods();
         void SetTransportMethod(int transportMethodId);
         void SetPaymentMethod(int paymentMethodId);
-        void CompleteOrder();
+        void CompleteOrder(string emailBody);
+        
     }
 }

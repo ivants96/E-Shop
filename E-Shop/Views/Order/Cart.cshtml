@@ -11,9 +11,9 @@
     <table class="table table-bordered">
         <thead>
             <tr class="table-primary">
-                <th class="w-50">Produkt</th>
-                <th class="w-25">Počet</th>
-                <th class="w-25">Cena</th>
+                <th class="w-50 text-left align-middle">Produkt</th>
+                <th class="w-25 text-center align-middle">Množstvo (ks)</th>
+                <th class="w-25 text-center align-middle">Cena</th>
             </tr>   
         </thead>
         <tbody>
@@ -30,13 +30,13 @@
                                 </button>
                             </div>
                         </td>
-                        <td>@string.Format("{0} €", item.Price * item.Quantity)</td>
+                        <td class="text-center">@string.Format("{0} €", item.Price * item.Quantity)</td>
                     </tr>
                 }
             }
         </tbody>
         <tfoot>
-            <tr class="table-info">
+            <tr class="table-info text-center">
                 <td><strong>Celkom</strong></td>
                 <td>@Model.OrderSummary.Quantity</td>
                 <td><strong>@string.Format("{0} €", Model.OrderSummary.Price)</strong></td>
