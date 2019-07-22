@@ -23,6 +23,5 @@ namespace E_Shop.Business.Interfaces
         void SetTransportMethod(int transportMethodId);
         void SetPaymentMethod(int paymentMethodId);
         void CompleteOrder(string emailBody);
-        
     }
 }

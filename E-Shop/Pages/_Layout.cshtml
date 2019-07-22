@@ -63,23 +63,13 @@
                     <div class="collapse navbar-collapse" id="infoNavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">O nás<span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Všetko o nákupe
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Ako nakúpiť</a>
-                                    <a class="dropdown-item" href="#">Obchodné podmienky</a>
-                                    <a class="dropdown-item" href="#">Reklamácie</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Doprava </a>
-                                </div>
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">Domov<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Kariéra</a>
+                                <a class="nav-link" asp-controller="Article" asp-action="Index">Všetko o nákupe</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Article" asp-action="Career">Kariéra</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Contact">Kontakt</a>

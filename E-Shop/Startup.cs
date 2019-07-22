@@ -77,12 +77,14 @@ namespace E_Shop
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IEOrderRepository, EOrderRepository>();
             services.AddScoped<IProductEOrderRepository, ProductEOrderRepository>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
 
             services.AddScoped<ICategoryManager, CategoryManager>();
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IReviewManager, ReviewManager>();
             services.AddScoped<IPersonManager, PersonManager>();
             services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IArticleManager, ArticleManager>();
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailSender, EmailSender>();
 

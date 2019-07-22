@@ -4,11 +4,17 @@
     ViewData["Title"] = "Kontakt";
 }
 
-<h2>Kontaktujte nás</h2>
+<h2 class="mt-3 font-weight-bold text-success">Kontaktujte nás</h2>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="alert">
+        <p class="text-info">
+            Kontaktujte náš zákaznícky servis. <br />
+            Ďalšie kontakty na naše pobočky nájdete v sekcií "Všetko o nákupe" - Kontakty.
+        </p>
+    </div>
+    <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -27,7 +33,7 @@
                 <span asp-validation-for="EmailBody" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <button  type="submit" class="btn btn-primary">Odoslať</button>
+                <button type="submit" class="btn btn-primary">Odoslať</button>
             </div>
         </form>
     </div>

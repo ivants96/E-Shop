@@ -230,7 +230,6 @@ namespace E_Shop.Business.Managers
         }
 
 
-
         public Dictionary<int, string> GetPaymentMethods()
         {
             var paymentCategory = _categoryRepository.GetWayOfPaymentCategory();

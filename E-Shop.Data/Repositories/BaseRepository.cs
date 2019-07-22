@@ -48,7 +48,7 @@ namespace E_Shop.Data.Repositories
         }
 
         public List<TEntity> GetAll()
-        {
+        {   
             return dbSet.ToList();
         }
 

@@ -1,0 +1,20 @@
+﻿@model E_Shop.Data.Models.Article
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2 class="mt-3 font-weight-bold text-success">@Model.Title</h2>
+
+<div>
+    @Html.Raw(Model.Content)
+</div>
+
+<div>
+    <a asp-action="Index">Späť k zoznamu článkov</a><br /><br />
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-controller="Article" asp-action="Edit" asp-route-id="@Model.Id">Editovať <span class="fa fa-pencil text-info"></span></a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" data-confirm="Naozaj chcete vymazať článok @Model.Title">Vymazať <span class="fa fa-remove text-danger"></span></a>
+    }
+</div>

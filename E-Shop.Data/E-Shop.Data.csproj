@@ -22,6 +22,8 @@
     <Compile Remove="Data\Migrations\20190309215005_RelationshipCreate.cs" />
     <Compile Remove="Data\Migrations\20190411210741_Person.cs" />
     <Compile Remove="Data\Migrations\20190519184235_EOrder.cs" />
+    <Compile Remove="Data\Migrations\20190720205342_Article.cs" />
+    <Compile Remove="Data\Migrations\20190721201252_Articles.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +33,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Data\ApplicationDbContext.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   
 </Project>

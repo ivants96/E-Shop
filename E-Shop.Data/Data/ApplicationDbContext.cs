@@ -20,6 +20,7 @@ namespace E_Shop.Data
         DbSet<Person> People { get; set; }
         DbSet<EOrder> EOrders { get; set; }
         DbSet<ProductEOrder> ProductEOrders { get; set; }
+        DbSet<Article> Articles { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                         : base(options)

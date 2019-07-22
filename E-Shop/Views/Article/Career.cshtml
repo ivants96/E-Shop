@@ -1,0 +1,21 @@
+﻿@model IEnumerable<E_Shop.Data.Models.Article>
+@{
+    ViewData["Title"] = "Kariéra";
+}
+<table class="table table-bordered">
+    @foreach (var article in Model)
+    {
+        <tr style="background-color: #F2FDFD;">
+            <td class="w-75"><a asp-controller="Article" asp-action="Details" asp-route-id="@article.Id">@article.Title</a></td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td><a asp-controller="Article" asp-action="Edit" asp-route-id="@article.Id">Editovať <span class="fa fa-pencil text-info"></span></a></td>
+                <td><a asp-action="Delete" asp-route-id="@article.Id" data-confirm="Naozaj chcete vymazať článok @article.Title?">Vymazať <span class="fa fa-remove text-danger"></span></a></td>
+            }
+        </tr>
+    }
+</table>
+
+@section Scripts{
+    <script src="~/js/confirm.js"></script>
+}
